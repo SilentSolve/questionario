@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<title>Questionario sulle abitudini alimentari</title>
+<style>:root {
+  --bg: #f6f7f4; --card: #ffffff; --ink: #1d2320; --muted: #5c6661; --line: #dfe3dd;
+  --accent: #2f6f4f; --accent-ink: #ffffff; --accent-soft: #e3efe8; --warn: #9a3b2a; --warn-soft: #f8e6e1;
+  --focus: #1f5fbf; --radius: 12px;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #141816; --card: #1d2320; --ink: #e8ece9; --muted: #a3ada7; --line: #2f3833;
+    --accent: #6fbf94; --accent-ink: #0f1a14; --accent-soft: #23332a; --warn: #f0a08f; --warn-soft: #3a2420; --focus: #8ab4ff; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+header.top { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+.top-inner { max-width: 760px; margin: 0 auto; padding: 10px 16px; }
+.top-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.brand { font-weight: 650; font-size: 15px; }
+.saved { font-size: 13px; color: var(--muted); }
+.bar { height: 6px; background: var(--line); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--accent); width: 0; transition: width .25s; }
+.step { font-size: 13px; color: var(--muted); margin-top: 4px; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 120px; }
+h1 { font-size: 26px; line-height: 1.25; margin: 8px 0 6px; }
+h2 { font-size: 19px; margin: 24px 0 8px; }
+.intro { color: var(--muted); margin: 0 0 16px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; margin: 12px 0; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+.grid2 > .field { margin-top: 0; }
+@media (max-width: 520px) { .grid2 { grid-template-columns: 1fr; } }
+.field { margin: 18px 0; }
+.field.hidden { display: none; }
+.label { display: block; font-weight: 600; margin-bottom: 6px; }
+.req::after { content: " *"; color: var(--warn); }
+.help { font-size: 14px; color: var(--muted); margin: -2px 0 8px; }
+input[type=text], input[type=email], input[type=tel], input[type=number], input[type=date], input[type=time], input[type=password], select, textarea {
+  width: 100%; font: inherit; color: var(--ink); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 46px; }
+textarea { min-height: 90px; resize: vertical; }
+textarea.big { min-height: 260px; }
+input:focus, select:focus, textarea:focus { outline: 3px solid var(--focus); outline-offset: 1px; border-color: transparent; }
+.unit-wrap { display: flex; align-items: center; gap: 10px; }
+.unit-wrap input { max-width: 180px; }
+.unit { color: var(--muted); font-size: 15px; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+legend { padding: 0; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips.col { flex-direction: column; align-items: stretch; }
+.chip { position: relative; }
+.chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chip span { display: block; padding: 10px 14px; min-height: 44px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; user-select: none; }
+.chips.col .chip span { padding-left: 40px; position: relative; }
+.chips.col .chip span::before { content: ""; position: absolute; left: 12px; top: 12px; width: 18px; height: 18px; border: 2px solid var(--muted); border-radius: 50%; }
+.chips.col .chip input[type=checkbox] + span::before { border-radius: 5px; }
+.chips.col .chip input:checked + span::before { background: var(--accent); border-color: var(--accent); box-shadow: inset 0 0 0 3px var(--card); }
+.chip input:checked + span { border-color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+.chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 1px; }
+.scale .chip span { min-width: 44px; text-align: center; padding: 10px 0; }
+.group-title { font-size: 14px; font-weight: 650; color: var(--muted); margin: 12px 0 6px; text-transform: uppercase; letter-spacing: .03em; }
+.row { padding: 12px 0; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row-label { font-weight: 550; margin-bottom: 8px; }
+.row .chip span { padding: 8px 11px; min-height: 40px; font-size: 15px; }
+.meal { display: grid; gap: 8px; }
+.meal-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rep-item { border: 1px dashed var(--line); border-radius: 10px; padding: 12px; margin: 10px 0; }
+.rep-head { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+.rep-item .field { margin: 10px 0; }
+button { font: inherit; cursor: pointer; }
+.btn { border: 1.5px solid var(--accent); background: var(--accent); color: var(--accent-ink); border-radius: 10px; padding: 12px 18px; min-height: 48px; font-weight: 650; }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.small { padding: 6px 12px; min-height: 36px; font-size: 15px; }
+.btn.link { border: 0; background: none; color: var(--warn); padding: 4px 6px; min-height: 0; font-weight: 500; }
+.btn:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+nav.bottom { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--line); z-index: 5; }
+.nav-inner { max-width: 760px; margin: 0 auto; padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); display: flex; justify-content: space-between; gap: 12px; }
+.nav-inner .btn { flex: 1; }
+details.guide { background: var(--accent-soft); border-radius: var(--radius); padding: 12px 16px; margin: 12px 0; }
+details.guide summary { font-weight: 650; cursor: pointer; }
+.info { background: var(--accent-soft); border-radius: 10px; padding: 4px 14px; margin: 18px 0; }
+.err { color: var(--warn); font-size: 15px; margin-top: 6px; }
+.field.invalid input, .field.invalid textarea, .field.invalid .chips .chip span, .field.invalid select { border-color: var(--warn); }
+.alert { background: var(--warn-soft); border-radius: var(--radius); padding: 14px 16px; margin: 16px 0; }
+.ok { background: var(--accent-soft); border-radius: var(--radius); padding: 14px 16px; margin: 16px 0; }
+.files li { margin: 4px 0; }
+.small { font-size: 14px; color: var(--muted); }
+.stack > * + * { margin-top: 10px; }
+.informativa { max-height: 50vh; overflow: auto; border: 1px solid var(--line); border-radius: 10px; padding: 4px 14px; background: var(--card); font-size: 15px; }
+.informativa table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.informativa td, .informativa th { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+.consent { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-top: 1px solid var(--line); }
+.consent input { width: 24px; height: 24px; margin-top: 2px; flex: none; accent-color: var(--accent); }
+.foodgroup summary { font-weight: 650; padding: 10px 0; cursor: pointer; }
+.foodgroup .count { color: var(--muted); font-weight: 400; font-size: 14px; }
+main h1:focus { outline: none; }
+
+ol.passi { margin: 8px 0 0; padding-left: 22px; }
+ol.passi li { margin: 0 0 8px; }
+#btn-prepara:disabled { opacity: .6; }
+</style>
+</head>
+<body>
+<header class="top"><div class="top-inner">
+  <div class="top-row"><span class="brand">Questionario nutrizionale</span><span class="saved" id="saved" aria-live="polite"></span></div>
+  <div class="bar" aria-hidden="true"><span id="bar"></span></div>
+  <div class="step" id="step"></div>
+</div></header>
+<main id="main"></main>
+<nav class="bottom" aria-label="Navigazione"><div class="nav-inner">
+  <button type="button" class="btn ghost" id="back">Indietro</button>
+  <button type="button" class="btn" id="next">Avanti</button>
+</div></nav>
+<noscript><div style="padding:16px;font:17px/1.5 system-ui,sans-serif"><p><b>Il questionario non si può compilare in questa anteprima.</b></p><p>Su iPhone i file aperti da WhatsApp o dalla Mail si vedono solo in anteprima: apri invece il <b>link</b> che ti è stato mandato, in Safari. Su Android o computer apri il file con Chrome, Safari, Edge o Firefox.</p></div></noscript>
+<script>/* ============================================================
+   CONFIGURAZIONE — da completare prima dell'uso
+   ============================================================ */
+var FORM_META = {
+  schema: "anamnesi-nutrizionale", storeKey: "anamnesi-nutrizionale-v1", dueParti: true,
+  titolo: "Questionario sulle abitudini alimentari", marchio: "Questionario nutrizionale", prefisso: "anamnesi",
+  intro: "Ti chiederò della tua salute, della tua giornata e di come mangi. Il questionario ha due parti: la prima richiede circa 15 minuti, la seconda (facoltativa, circa 15 minuti) puoi farla anche dopo. Le risposte si salvano da sole su questo dispositivo, quindi puoi interrompere e riprendere."
+};
+const CONFIG = {
+  titolare: "Gabriele Solvetti",
+  contatto: "scrivendogli con lo stesso canale con cui hai ricevuto questo questionario (per esempio WhatsApp)",
+  conservazioneMesi: "24",
+  versione: "1.1"
+};
+
+/* ============================================================
+   SCHEMA DEL QUESTIONARIO
+   Tipi: text, email, tel, textarea, number, date, time, radio,
+   multi, scale, yesno, repeat, grid, meals, file, info
+   show: funzione (A) => boolean  — A = risposte
+   req: obbligatoria quando visibile
+   ============================================================ */
+const SN = ["sì", "no"];
+const is = (A, id, v) => A[id] === v;
+const has = (A, id, v) => Array.isArray(A[id]) && A[id].includes(v);
+const any = (A, id) => Array.isArray(A[id]) && A[id].length > 0;
+const fem = A => is(A, "1.6", "femmina");
+const sport = A => is(A, "8.7", "sì");
+const vegOrVeg = A => ["vegana", "vegetariana con latte e uova", "vegetariana con solo latte"].includes(A["7.4"]);
+
+const FREQ7 = ["mai", "meno di 1 a settimana", "1–2 a settimana", "3–4 a settimana", "5–6 a settimana", "1 al giorno", "2 o più al giorno"];
+const MSV = ["mai", "a volte", "spesso"];
+const GIORNI = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"];
+const TEMPO_CUCINA = ["meno di 15 min", "15–30 min", "30–60 min", "oltre 1 ora"];
+
+const GUIDA_MISURE = `
+<p><b>Ti servono:</b> una bilancia appoggiata su un pavimento duro (non su un tappeto), un metro da sarta non elastico e, per l'altezza, una persona che ti aiuti. Scrivi ogni numero subito dopo averlo letto.</p>
+<ul>
+<li><b>Peso.</b> Pesati al mattino, dopo essere andato/a in bagno e prima di colazione, senza vestiti o in biancheria intima. Usa sempre la stessa bilancia.</li>
+<li><b>Altezza.</b> Togli le scarpe e appoggia talloni, glutei e schiena al muro, talloni uniti e sguardo dritto. Chi ti aiuta appoggia un libro sulla tua testa, ben dritto contro il muro, e segna con una matita il punto sotto il libro. Misura dal pavimento al segno.</li>
+<li><b>Circonferenza vita.</b> In piedi, piedi uniti, pancia rilassata, sulla pelle nuda. Sul fianco trova l'ultima costola e l'osso del bacino: il metro va a metà strada fra i due, parallelo al pavimento, aderente ma senza stringere. Leggi il numero alla fine di un respiro normale, senza trattenere la pancia. Misura due volte; se le misure differiscono di più di 1 cm, fai una terza misura.</li>
+<li><b>Circonferenza fianchi.</b> In piedi, piedi uniti. Il metro passa dove i glutei sporgono di più (guardati di lato allo specchio), parallelo al pavimento.</li>
+</ul>
+<p>Per i controlli successivi misurati alla stessa ora e nelle stesse condizioni. Se hai il ciclo, evita di confrontare misure prese nei giorni prima delle mestruazioni.</p>`;
+
+const GUIDA_SPORT = `
+<ul>
+<li><b>Braccio.</b> Piega il gomito ad angolo retto per trovare il punto a metà tra la punta della spalla e la punta del gomito. Poi lascia il braccio destro rilassato lungo il fianco e misura in quel punto.</li>
+<li><b>Coscia.</b> In piedi, peso su entrambe le gambe. Il metro va a metà tra la piega dell'inguine e il bordo superiore del ginocchio, sulla coscia destra.</li>
+</ul>`;
+
+const ALLERGENI = ["cereali con glutine", "crostacei", "uova", "pesce", "arachidi", "soia", "latte", "frutta a guscio", "sedano", "senape", "semi di sesamo", "anidride solforosa e solfiti", "lupini", "molluschi", "altro"];
+
+const ALIMENTI = [
+  ["Cereali e tuberi", ["pasta", "riso", "pane comune", "pane integrale", "farro", "orzo", "quinoa", "cous cous", "fiocchi d'avena", "patate", "gnocchi", "polenta", "cracker o gallette"]],
+  ["Legumi e derivati", ["fagioli", "ceci", "lenticchie", "piselli", "fave", "edamame", "tofu", "tempeh"]],
+  ["Pesce", ["alici", "sgombro o sardine", "salmone", "merluzzo o nasello", "orata o branzino", "tonno in scatola", "calamari o polpo", "gamberi", "cozze o vongole"]],
+  ["Carne, salumi e uova", ["pollo", "tacchino", "manzo", "vitello", "maiale", "coniglio", "agnello", "prosciutto crudo", "prosciutto cotto", "bresaola", "uova"]],
+  ["Latte e derivati", ["latte", "yogurt bianco", "yogurt greco", "ricotta", "mozzarella", "fiocchi di latte", "parmigiano o grana", "formaggi stagionati", "bevande vegetali"]],
+  ["Verdure", ["lattuga", "rucola", "spinaci", "bietole", "broccoli", "cavolfiore", "cavolo o verza", "zucchine", "melanzane", "peperoni", "pomodori", "carote", "finocchi", "carciofi", "fagiolini", "funghi", "zucca", "cipolla o porro"]],
+  ["Frutta", ["mela", "pera", "banana", "arance o mandarini", "kiwi", "frutti di bosco", "uva", "pesche o albicocche", "fragole", "ananas", "melone o anguria", "frutta essiccata"]],
+  ["Frutta secca e semi", ["noci", "mandorle", "nocciole", "pistacchi", "semi (lino, chia, zucca)", "burro di arachidi"]]
+];
+const SCALA_ALIMENTI = ["lo mangio volentieri", "lo mangio", "non mi piace ma posso", "non lo mangio mai"];
+
+const PASTI = ["Colazione", "Spuntino di metà mattina", "Pranzo", "Merenda", "Cena", "Dopo cena"];
+
+const ESAMI = [
+  ["glicemia", "mg/dL"], ["emoglobina glicata", "mmol/mol"], ["colesterolo totale", "mg/dL"],
+  ["colesterolo HDL", "mg/dL"], ["colesterolo LDL", "mg/dL"], ["trigliceridi", "mg/dL"],
+  ["creatinina", "mg/dL"], ["acido urico", "mg/dL"], ["TSH", "mUI/L"], ["emoglobina", "g/dL"],
+  ["ferritina", "ng/mL"], ["vitamina D", "ng/mL"], ["vitamina B12", "pg/mL"]
+];
+
+var SECTIONS = [
+/* ---------------- LIVELLO 1 ---------------- */
+{ key: "s1", level: 1, title: "Dati personali", intro: "Qualche informazione su di te.", fields: [
+  { id: "1.4", label: "Nome e cognome", type: "text", req: true, auto: "name" },
+  { id: "1.5", label: "Data di nascita", type: "date", req: true },
+  { id: "1.6", label: "Sesso biologico", type: "radio", opts: ["femmina", "maschio"], req: true, help: "Serve per le formule che stimano il fabbisogno energetico." },
+  { id: "1.7", label: "Email", type: "email", req: true, auto: "email" },
+  { id: "1.8", label: "Telefono", type: "tel", auto: "tel" },
+  { id: "1.9", label: "Professione", type: "text", req: true },
+  { id: "1.10", label: "Comune di residenza", type: "text" },
+  { id: "1.11", label: "Come preferisci ricevere le indicazioni?", type: "radio", opts: ["email", "WhatsApp", "di persona"], req: true },
+  { id: "1.12", label: "Chi ti ha indirizzato da me?", type: "text" }
+]},
+
+{ key: "s2", level: 1, title: "Alcune domande importanti", intro: "Queste domande servono a capire se il percorso è adatto a te o se serve prima una valutazione personalizzata.", fields: [
+  { id: "2.1", label: "Sei in gravidanza o la stai cercando attivamente?", type: "yesno", req: true, show: fem },
+  { id: "2.2", label: "Stai allattando?", type: "yesno", req: true, show: fem },
+  { id: "2.3", label: "Hai una malattia renale cronica o sei in dialisi?", type: "yesno", req: true },
+  { id: "2.4", label: "Hai il diabete e usi insulina o sulfaniluree (per esempio gliclazide, glimepiride)?", type: "yesno", req: true },
+  { id: "2.5", label: "Sei in cura per un tumore, o lo sei stato/a negli ultimi 12 mesi?", type: "yesno", req: true },
+  { id: "2.6", label: "Hai fatto un intervento di chirurgia bariatrica (bendaggio, sleeve, bypass)?", type: "yesno", req: true },
+  { id: "2.7", label: "Hai una malattia del fegato grave (per esempio cirrosi)?", type: "yesno", req: true },
+  { id: "2.8", label: "Hai uno scompenso cardiaco?", type: "yesno", req: true },
+  { id: "2.9", label: "Hai una malattia infiammatoria intestinale (Crohn, rettocolite) in fase attiva?", type: "yesno", req: true },
+  { id: "2.10", label: "Negli ultimi 6 mesi hai perso peso senza volerlo?", type: "yesno", req: true },
+  { id: "2.10a", label: "Quanti kg, circa?", type: "number", unit: "kg", min: 0, max: 80, step: 0.5, req: true, show: A => is(A, "2.10", "sì") },
+  { id: "2.11", label: "Assumi anticoagulanti (per esempio warfarin)?", type: "yesno", req: true },
+  { id: "2.12", label: "Ti è stato diagnosticato un disturbo alimentare, ora o in passato?", type: "yesno", req: true },
+  { type: "info", html: "<p><b>Il tuo rapporto con il cibo.</b> Queste domande aiutano a capire il tuo rapporto con il cibo. Non ci sono risposte giuste o sbagliate.</p>" },
+  { id: "2.13", label: "Ti capita di provocarti il vomito perché ti senti troppo pieno/a?", type: "yesno", req: true },
+  { id: "2.14", label: "Ti preoccupa aver perso il controllo su quanto mangi?", type: "yesno", req: true },
+  { id: "2.15", label: "Hai perso più di 6 kg in 3 mesi?", type: "yesno", req: true },
+  { id: "2.16", label: "Ti senti grasso/a anche quando gli altri dicono che sei troppo magro/a?", type: "yesno", req: true },
+  { id: "2.17", label: "Diresti che il cibo domina la tua vita?", type: "yesno", req: true }
+]},
+
+{ key: "s3", level: 1, title: "Misure e storia del peso", intro: "Prendi le misure seguendo la guida: bastano una bilancia e un metro da sarta.", guide: GUIDA_MISURE, fields: [
+  { id: "3.1", label: "Peso attuale", type: "number", unit: "kg", min: 30, max: 300, step: 0.1, req: true },
+  { id: "3.2", label: "Data in cui ti sei pesato/a", type: "date", req: true },
+  { id: "3.3", label: "Altezza", type: "number", unit: "cm", min: 120, max: 230, step: 0.5, req: true },
+  { id: "3.4", label: "Circonferenza vita", type: "number", unit: "cm", min: 40, max: 220, step: 0.5, req: true },
+  { id: "3.5", label: "Circonferenza fianchi", type: "number", unit: "cm", min: 50, max: 220, step: 0.5 },
+  { id: "3.7", label: "Peso a 20 anni circa", type: "number", unit: "kg", min: 30, max: 300, step: 0.5 },
+  { id: "3.8kg", label: "Peso massimo da adulto/a", type: "number", unit: "kg", min: 30, max: 300, step: 0.5, half: true },
+  { id: "3.8anno", label: "Anno del peso massimo", type: "number", min: 1930, max: 2100, step: 1, half: true },
+  { id: "3.9kg", label: "Peso minimo da adulto/a", type: "number", unit: "kg", min: 30, max: 300, step: 0.5, half: true },
+  { id: "3.9anno", label: "Anno del peso minimo", type: "number", min: 1930, max: 2100, step: 1, half: true },
+  { id: "3.10", label: "Nell'ultimo anno il tuo peso è…", type: "radio", opts: ["stabile", "aumentato", "diminuito", "oscilla"], req: true },
+  { id: "3.11", label: "Hai già seguito delle diete?", type: "yesno", req: true },
+  { id: "3.11a", label: "Per ogni dieta", type: "repeat", show: A => is(A, "3.11", "sì"), add: "Aggiungi una dieta", sub: [
+    { id: "tipo", label: "Tipo di dieta", type: "text" },
+    { id: "chi", label: "Chi l'aveva prescritta", type: "text" },
+    { id: "durata", label: "Durata", type: "text" },
+    { id: "persi", label: "Kg persi", type: "number", min: 0, max: 150, step: 0.5 },
+    { id: "ripresi", label: "Kg ripresi", type: "number", min: 0, max: 150, step: 0.5 }
+  ]},
+  { id: "3.12", label: "C'è un peso a cui ti senti bene? (facoltativa)", type: "number", unit: "kg", min: 30, max: 300, step: 0.5 }
+]},
+
+{ key: "s4", level: 1, title: "Salute", intro: "Le informazioni sulla salute servono ad adattare le indicazioni alle tue condizioni.", fields: [
+  { id: "4.1", label: "Hai qualcuno di questi disturbi o condizioni?", type: "multi", groups: [
+    ["Metaboliche", ["prediabete o glicemia alta", "diabete tipo 2 senza insulina", "colesterolo o trigliceridi alti", "acido urico alto o gotta", "steatosi epatica (fegato grasso)"]],
+    ["Cuore e circolazione", ["pressione alta", "malattie del cuore o dei vasi"]],
+    ["Tiroide", ["ipotiroidismo", "ipertiroidismo", "tiroidite di Hashimoto"]],
+    ["Digestive", ["reflusso o gastrite", "colon irritabile", "stitichezza", "diarrea frequente", "celiachia", "diverticoli"]],
+    ["Altre", ["anemia o ferro basso", "osteoporosi", "calcoli renali", "sindrome dell'ovaio policistico", "emicrania", "altro"]]
+  ]},
+  { id: "4.1b", label: "Per ciascuno: da quando ce l'hai e chi l'ha diagnosticato? Se hai scelto \"altro\", scrivi quale.", type: "textarea", show: A => any(A, "4.1") },
+  { id: "4.2", label: "Quante volte vai di corpo?", type: "radio", opts: ["più di 2 al giorno", "1–2 al giorno", "ogni 2–3 giorni", "meno spesso"] },
+  { id: "4.3", label: "Com'è di solito la consistenza? (scala di Bristol)", type: "radio", opts: [
+    "tipo 1 – pezzi duri separati", "tipo 2 – a salsiccia, grumosa", "tipo 3 – a salsiccia con crepe", "tipo 4 – liscia e morbida",
+    "tipo 5 – pezzi morbidi", "tipo 6 – pezzi molli, poltiglia", "tipo 7 – liquida"] },
+  { id: "4.4", label: "Ti capita di sentirti gonfio/a dopo i pasti?", type: "radio", opts: ["mai", "a volte", "spesso"] },
+  { id: "4.5", label: "Il ciclo è regolare?", type: "radio", opts: ["sì", "no", "sono in menopausa", "uso contraccettivi ormonali"], show: fem },
+  { id: "4.5a", label: "Da quanti mesi manca o è irregolare?", type: "number", unit: "mesi", min: 0, max: 600, step: 1, show: A => fem(A) && is(A, "4.5", "no") },
+  { id: "4.5b", label: "Nei giorni prima del ciclo la fame o la voglia di dolci cambiano?", type: "radio", opts: ["no", "un po'", "molto"], show: A => fem(A) && !is(A, "4.5", "sono in menopausa") },
+  { id: "4.6", label: "Prendi farmaci in modo continuativo?", type: "yesno", req: true },
+  { id: "4.6a", label: "Farmaci", type: "repeat", show: A => is(A, "4.6", "sì"), add: "Aggiungi un farmaco", sub: [
+    { id: "nome", label: "Nome", type: "text" }, { id: "dose", label: "Dose", type: "text" }, { id: "orario", label: "Quando lo prendi", type: "text" }
+  ]},
+  { id: "4.7", label: "Prendi integratori (vitamine, minerali, proteine, erbe)?", type: "yesno", req: true },
+  { id: "4.7a", label: "Integratori", type: "repeat", show: A => is(A, "4.7", "sì"), add: "Aggiungi un integratore", sub: [
+    { id: "nome", label: "Nome", type: "text" }, { id: "dose", label: "Dose", type: "text" }, { id: "perche", label: "Perché lo prendi", type: "text" }
+  ]},
+  { id: "4.8", label: "Interventi chirurgici importanti", type: "textarea" },
+  { id: "4.11", label: "Nei tuoi genitori, fratelli o sorelle c'è qualcuno con…", type: "multi", opts: [
+    "diabete", "infarto o ictus prima dei 55 anni (uomini) o 65 (donne)", "colesterolo alto", "obesità", "osteoporosi", "tumore del colon o della mammella", "nessuna di queste"] },
+  { id: "4.12", label: "Fumi?", type: "radio", opts: ["no, mai", "sì", "ho smesso"], req: true },
+  { id: "4.12a", label: "Da quanti mesi hai smesso?", type: "number", unit: "mesi", min: 0, max: 900, step: 1, show: A => is(A, "4.12", "ho smesso") },
+  { id: "4.13", label: "Conosci la tua pressione arteriosa?", type: "yesno" },
+  { id: "4.13max", label: "Massima", type: "number", unit: "mmHg", min: 70, max: 260, step: 1, half: true, show: A => is(A, "4.13", "sì") },
+  { id: "4.13min", label: "Minima", type: "number", unit: "mmHg", min: 40, max: 160, step: 1, half: true, show: A => is(A, "4.13", "sì") },
+  { id: "4.14", label: "Hai difficoltà a masticare (denti, protesi) o a deglutire?", type: "radio", opts: ["no", "a masticare", "a deglutire", "entrambe"] }
+]},
+
+{ key: "s5", level: 1, title: "La tua giornata", intro: "Sonno, lavoro e orari dei pasti: servono a costruire indicazioni adatte alla tua giornata vera.", fields: [
+  { id: "5.1f", label: "Ora in cui ti svegli nei giorni lavorativi", type: "time", req: true, half: true },
+  { id: "5.1w", label: "Ora in cui ti svegli nel weekend", type: "time", req: true, half: true },
+  { id: "5.2f", label: "Ora in cui vai a dormire nei giorni lavorativi", type: "time", req: true, half: true },
+  { id: "5.2w", label: "Ora in cui vai a dormire nel weekend", type: "time", req: true, half: true },
+  { id: "5.3", label: "Come dormi di solito? (0 = malissimo, 10 = benissimo)", type: "scale" },
+  { id: "5.3a", label: "Se potessi scegliere liberamente, saresti più…", type: "radio", opts: ["mattiniero/a", "né l'uno né l'altro", "serale"] },
+  { id: "5.4", label: "Il tuo lavoro è soprattutto…", type: "radio", opts: ["seduto", "in piedi", "fisicamente pesante", "non lavoro"], req: true },
+  { id: "5.5", label: "Fai turni?", type: "radio", opts: ["no, orario fisso", "turni a rotazione", "turni notturni"], req: true, show: A => !is(A, "5.4", "non lavoro") },
+  { id: "5.5inizio", label: "Inizio del lavoro", type: "time", half: true, show: A => is(A, "5.5", "no, orario fisso") && !is(A, "5.4", "non lavoro") },
+  { id: "5.5fine", label: "Fine del lavoro", type: "time", half: true, show: A => is(A, "5.5", "no, orario fisso") && !is(A, "5.4", "non lavoro") },
+  { id: "5.5giorni", label: "Giorni di lavoro", type: "multi", opts: GIORNI, inline: true, show: A => is(A, "5.5", "no, orario fisso") && !is(A, "5.4", "non lavoro") },
+  { id: "5.5b", label: "Descrivi lo schema dei turni (es. 2 mattine, 2 pomeriggi, 2 notti, 2 riposi) e gli orari di ogni turno", type: "textarea", req: true, show: A => ["turni a rotazione", "turni notturni"].includes(A["5.5"]) && !is(A, "5.4", "non lavoro") },
+  { id: "5.6", label: "Lavori da casa alcuni giorni? Quali?", type: "multi", opts: GIORNI, inline: true, show: A => !is(A, "5.4", "non lavoro") },
+  { id: "5.7", label: "Quanto dura la pausa pranzo?", type: "radio", opts: ["meno di 30 min", "30–60 min", "oltre 1 ora", "non ho pausa"], show: A => !is(A, "5.4", "non lavoro") },
+  { id: "5.8", label: "I tuoi pasti oggi", type: "meals", req: true, help: "Per ogni pasto indica se lo fai, a che ora e dove." },
+  { id: "5.9", label: "Nel weekend gli orari cambiano molto?", type: "yesno" },
+  { id: "5.9a", label: "Come cambiano?", type: "textarea", show: A => is(A, "5.9", "sì") },
+  { id: "5.10", label: "In quale momento della giornata hai più fame?", type: "radio", opts: ["mattina", "pranzo", "pomeriggio", "sera", "notte"] },
+  { id: "5.11", label: "Ci sono orari in cui non puoi assolutamente mangiare?", type: "textarea" }
+]},
+
+{ key: "s6", level: 1, title: "Come mangi", intro: "Rispondi pensando a una settimana normale. Le risposte sono numeri: va bene anche una stima.", fields: [
+  { type: "info", html: "<p><b>Dieta mediterranea.</b> Una porzione di verdura è circa un piatto (200 g); un contorno vale mezza porzione.</p>" },
+  { id: "6.1", label: "Usi l'olio d'oliva come grasso principale per cucinare e condire?", type: "yesno", req: true },
+  { id: "6.2", label: "Quanti cucchiai di olio d'oliva usi in un giorno (anche per cucinare e fuori casa)?", type: "number", unit: "cucchiai al giorno", min: 0, max: 30, step: 0.5, req: true },
+  { id: "6.3", label: "Quante porzioni di verdura mangi al giorno?", type: "number", unit: "porzioni al giorno", min: 0, max: 20, step: 0.5, req: true },
+  { id: "6.4", label: "Quanti frutti mangi al giorno (anche spremute)?", type: "number", unit: "frutti al giorno", min: 0, max: 20, step: 0.5, req: true },
+  { id: "6.5", label: "Quante porzioni a settimana di carne rossa, hamburger o salumi? (una porzione: 100 g di carne o 50 g di salumi)", type: "number", unit: "porzioni a settimana", min: 0, max: 50, step: 0.5, req: true },
+  { id: "6.6", label: "Quante porzioni al giorno di burro, margarina o panna?", type: "number", unit: "porzioni al giorno", min: 0, max: 10, step: 0.5, req: true },
+  { id: "6.7", label: "Quante bevande zuccherate o gassate bevi al giorno?", type: "number", unit: "bevande al giorno", min: 0, max: 20, step: 0.5, req: true },
+  { id: "6.8", label: "Quanti bicchieri di vino bevi a settimana?", type: "number", unit: "bicchieri a settimana", min: 0, max: 100, step: 1, req: true },
+  { id: "6.9", label: "Quante porzioni di legumi mangi a settimana?", type: "number", unit: "porzioni a settimana", min: 0, max: 30, step: 0.5, req: true },
+  { id: "6.10", label: "Quante porzioni di pesce o frutti di mare mangi a settimana?", type: "number", unit: "porzioni a settimana", min: 0, max: 30, step: 0.5, req: true },
+  { id: "6.11", label: "Quante volte a settimana mangi dolci o merendine confezionate?", type: "number", unit: "volte a settimana", min: 0, max: 50, step: 1, req: true },
+  { id: "6.12", label: "Quante porzioni di frutta secca mangi a settimana? (una manciata)", type: "number", unit: "porzioni a settimana", min: 0, max: 30, step: 0.5, req: true },
+  { id: "6.13", label: "Preferisci pollo, tacchino o coniglio a manzo, maiale, hamburger o salsicce?", type: "yesno", req: true },
+  { id: "6.14", label: "Quante volte a settimana mangi piatti con soffritto o sugo di pomodoro, cipolla o aglio e olio?", type: "number", unit: "volte a settimana", min: 0, max: 30, step: 1, req: true },
+  { id: "6.15", label: "Quanto spesso mangi questi alimenti?", type: "grid", req: true, cols: FREQ7, rows: [
+    ["carne_bianca", "Carne bianca (pollo, tacchino, coniglio) — una fettina o un petto"],
+    ["uova", "Uova — 2 uova"],
+    ["latte_yogurt", "Latte e yogurt — un bicchiere o un vasetto"],
+    ["formaggi", "Formaggi — una fetta di stagionato o una mozzarella"],
+    ["cereali_integrali", "Pane, pasta, riso integrali — un piatto o 2 fette"],
+    ["cereali_raffinati", "Pane, pasta, riso non integrali — un piatto o 2 fette"],
+    ["colazione", "Cereali da colazione, fette biscottate — una tazza o 4 fette"],
+    ["snack_salati", "Snack salati — un pacchetto di patatine o cracker"],
+    ["pasti_pronti", "Pasti pronti o fast food — un pasto"]
+  ]},
+  { id: "6.16", label: "Quanta acqua bevi al giorno?", type: "radio", opts: ["meno di 1 L", "1–1,5 L", "1,5–2 L", "oltre 2 L"], req: true },
+  { id: "6.17", label: "Quanti caffè bevi al giorno?", type: "number", unit: "tazzine", min: 0, max: 20, step: 1, req: true },
+  { id: "6.17a", label: "Ci metti lo zucchero?", type: "yesno", show: A => Number(A["6.17"]) > 0 },
+  { id: "6.18", label: "Aggiungi sale a tavola?", type: "radio", opts: ["mai", "a volte", "sempre"] },
+  { type: "info", html: "<p><b>Alcol.</b> Un'unità alcolica è circa un bicchiere di vino da 125 ml, una lattina di birra da 330 ml o un bicchierino di superalcolico da 40 ml (grappa, amaro, whisky, vodka).</p>" },
+  { id: "6.19", label: "Con che frequenza bevi alcolici?", type: "radio", opts: ["mai", "una volta al mese o meno", "2–4 volte al mese", "2–3 volte a settimana", "4 o più volte a settimana"], req: true },
+  { id: "6.20", label: "In un giorno in cui bevi, quante unità bevi di solito?", type: "radio", opts: ["1–2", "3–4", "5–6", "7–9", "10 o più"], req: true, show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { id: "6.21", label: "Con che frequenza bevi 6 o più unità in una sola occasione?", type: "radio", opts: ["mai", "meno di una volta al mese", "una volta al mese", "una volta a settimana", "ogni giorno o quasi"], req: true, show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { type: "info", html: "<p>In una settimana tipo, oltre al vino che hai già indicato, quanto bevi di questi?</p>", show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { id: "6.21b", label: "Birra (lattine o bottiglie piccole da 330 ml)", type: "number", unit: "a settimana", min: 0, max: 100, step: 1, req: true, half: true, show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { id: "6.21s", label: "Superalcolici: grappa, amari, whisky, vodka, rum, liquori (bicchierini da 40 ml)", type: "number", unit: "a settimana", min: 0, max: 100, step: 1, req: true, half: true, show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { id: "6.21c", label: "Aperitivi alcolici e cocktail (spritz, gin tonic…)", type: "number", unit: "a settimana", min: 0, max: 100, step: 1, req: true, half: true, show: A => A["6.19"] && !is(A, "6.19", "mai") },
+  { id: "6.22", label: "Quanto dura di solito il pranzo o la cena?", type: "radio", opts: ["meno di 10 min", "10–20 min", "oltre 20 min"] },
+  { id: "6.23", label: "Mangi davanti a TV, telefono o computer?", type: "radio", opts: ["mai", "a volte", "quasi sempre"] },
+  { id: "6.24", label: "Ti capita di mangiare fuori pasto senza fame?", type: "radio", opts: MSV },
+  { id: "6.25", label: "Dopo pranzo o cena, dopo quanto ti torna fame?", type: "radio", opts: ["meno di 1 ora", "1–2 ore", "2–3 ore", "oltre 3 ore"] }
+]},
+
+{ key: "s7", level: 1, title: "Allergie, scelte e gusti", intro: "Distinguiamo ciò che è stato diagnosticato da ciò che sospetti.", fields: [
+  { id: "7.1", label: "Hai allergie alimentari diagnosticate da un medico?", type: "yesno", req: true },
+  { id: "7.1a", label: "Quali?", type: "multi", opts: ALLERGENI, req: true, show: A => is(A, "7.1", "sì") },
+  { id: "7.1b", label: "Che reazione hai avuto? Se hai scelto \"altro\", indica anche l'alimento.", type: "textarea", show: A => is(A, "7.1", "sì") },
+  { id: "7.2", label: "Hai intolleranze diagnosticate con un test?", type: "multi", opts: ["nessuna", "lattosio", "celiachia", "altro"], req: true, exclusive: "nessuna" },
+  { id: "7.2a", label: "Quale altra intolleranza?", type: "text", show: A => has(A, "7.2", "altro") },
+  { id: "7.3", label: "Ci sono alimenti che sospetti ti facciano male, senza una diagnosi?", type: "textarea" },
+  { id: "7.4", label: "Che tipo di alimentazione segui?", type: "radio", opts: ["onnivora", "pescetariana", "vegetariana con latte e uova", "vegetariana con solo latte", "vegana", "altro"], req: true },
+  { id: "7.4b", label: "Quale?", type: "text", show: A => is(A, "7.4", "altro") },
+  { id: "7.4a", label: "Prendi un integratore di vitamina B12?", type: "radio", opts: ["sì", "no", "non so"], req: true, show: vegOrVeg },
+  { id: "7.5", label: "Ci sono alimenti che escludi per motivi religiosi, culturali o etici?", type: "textarea" },
+  { id: "7.6", label: "Alimenti che non mangi o non ti piacciono", type: "textarea", help: "Nel Livello 2 troverai una tabella dettagliata: qui scrivi quelli più importanti." },
+  { id: "7.7", label: "Alimenti che ami e vorresti mantenere", type: "textarea" },
+  { id: "7.8", label: "C'è un piatto o un'abitudine a cui non rinunceresti mai (es. la pizza del sabato)?", type: "textarea" },
+  { id: "7.10", label: "La colazione la preferisci…", type: "radio", opts: ["dolce", "salata", "tutte e due", "non faccio colazione"] },
+  { id: "7.11", label: "Cosa non deve mancare a colazione?", type: "text", show: A => !is(A, "7.10", "non faccio colazione") }
+]},
+
+{ key: "s8", level: 1, title: "Movimento e sport", intro: "Pensa agli ultimi 7 giorni. Conta solo le attività durate almeno 10 minuti di fila.", fields: [
+  { id: "8.1g", label: "Giorni con attività intensa (corsa, bici veloce, sollevare pesi)", type: "number", unit: "giorni", min: 0, max: 7, step: 1, half: true },
+  { id: "8.1m", label: "Minuti in media in quei giorni", type: "number", unit: "min", min: 0, max: 600, step: 5, half: true, show: A => Number(A["8.1g"]) > 0 },
+  { id: "8.2g", label: "Giorni con attività moderata (bici tranquilla, nuoto leggero, lavori di casa pesanti)", type: "number", unit: "giorni", min: 0, max: 7, step: 1, half: true },
+  { id: "8.2m", label: "Minuti in media in quei giorni", type: "number", unit: "min", min: 0, max: 600, step: 5, half: true, show: A => Number(A["8.2g"]) > 0 },
+  { id: "8.3g", label: "Giorni in cui hai camminato almeno 10 minuti di fila", type: "number", unit: "giorni", min: 0, max: 7, step: 1, half: true },
+  { id: "8.3m", label: "Minuti in media in quei giorni", type: "number", unit: "min", min: 0, max: 600, step: 5, half: true, show: A => Number(A["8.3g"]) > 0 },
+  { id: "8.4", label: "Quante ore passi seduto/a in un giorno feriale?", type: "number", unit: "ore", min: 0, max: 20, step: 0.5 },
+  { id: "8.5", label: "Se usi un contapassi: passi medi al giorno", type: "number", unit: "passi", min: 0, max: 60000, step: 100 },
+  { id: "8.6", label: "Come ti sposti per andare al lavoro o a scuola?", type: "radio", opts: ["auto", "mezzi pubblici", "a piedi", "bici", "misto"] },
+  { id: "8.7", label: "Pratichi sport o allenamento in modo regolare?", type: "yesno", req: true },
+  { id: "8.7a", label: "Le tue attività", type: "repeat", req: true, show: sport, add: "Aggiungi un'attività", sub: [
+    { id: "tipo", label: "Attività", type: "text" },
+    { id: "sedute", label: "Sedute a settimana", type: "number", min: 0, max: 21, step: 1 },
+    { id: "durata", label: "Durata (minuti)", type: "number", min: 0, max: 600, step: 5 },
+    { id: "orario", label: "Orario abituale", type: "time" },
+    { id: "fatica", label: "Fatica percepita (0–10)", type: "number", min: 0, max: 10, step: 1 }
+  ]},
+  { id: "8.8", label: "Livello", type: "radio", opts: ["amatoriale", "agonistico"], show: sport },
+  { id: "8.9", label: "Hai gare o obiettivi sportivi nei prossimi mesi?", type: "text", show: sport },
+  { id: "8.9d", label: "Quando?", type: "date", show: A => sport(A) && !!A["8.9"] },
+  { id: "8.10", label: "Mangi qualcosa prima o dopo l'allenamento? Cosa?", type: "textarea", show: sport },
+  { id: "8.11", label: "Usi integratori sportivi (proteine, creatina, sali, gel)?", type: "textarea", show: sport }
+]},
+
+{ key: "s9", level: 1, title: "Obiettivi e motivazione", intro: "Qui conta come la vedi tu.", fields: [
+  { id: "9.1", label: "Obiettivo principale", type: "radio", opts: ["perdere peso", "mantenere il peso", "aumentare la massa muscolare", "migliorare la prestazione sportiva", "migliorare esami o salute", "mangiare in modo più equilibrato"], req: true },
+  { id: "9.2", label: "Altri obiettivi", type: "multi", opts: ["perdere peso", "mantenere il peso", "aumentare la massa muscolare", "migliorare la prestazione sportiva", "migliorare esami o salute", "mangiare in modo più equilibrato", "altro"] },
+  { id: "9.3", label: "Perché proprio adesso?", type: "textarea", req: true },
+  { id: "9.4", label: "Fra 3 mesi, cosa ti farebbe dire \"ha funzionato\"?", type: "textarea" },
+  { id: "9.4a", label: "C'è una data o un evento a cui tieni (matrimonio, gara, viaggio, visita medica)?", type: "yesno" },
+  { id: "9.4b", label: "Quale?", type: "text", half: true, show: A => is(A, "9.4a", "sì") },
+  { id: "9.4c", label: "Quando?", type: "date", half: true, show: A => is(A, "9.4a", "sì") },
+  { id: "9.5", label: "Quanto è importante per te cambiare alimentazione adesso? (0 = per niente, 10 = moltissimo)", type: "scale", req: true },
+  { id: "9.6", label: "Quanto ti senti capace di riuscirci? (0 = per niente, 10 = moltissimo)", type: "scale", req: true },
+  { id: "9.7", label: "Cosa ti ha fatto smettere le altre volte?", type: "multi", opts: ["fame", "poco tempo", "stress", "cene e uscite", "famiglia", "noia", "costi", "risultati lenti", "è la prima volta", "altro"] },
+  { id: "9.7a", label: "Sei già stato/a seguito/a da un nutrizionista o dietista?", type: "yesno" },
+  { id: "9.7b", label: "Cosa ha funzionato e cosa no?", type: "textarea", show: A => is(A, "9.7a", "sì") },
+  { id: "9.8", label: "Ti capita di mangiare per noia, stress o tristezza?", type: "radio", opts: MSV },
+  { id: "9.9", label: "Ti capita di mangiare di notte o dopo esserti già coricato/a?", type: "radio", opts: MSV },
+  { id: "9.10", label: "In casa qualcuno ti sostiene in questo percorso?", type: "radio", opts: ["sì", "in parte", "no", "vivo da solo/a"] },
+  { id: "9.10a", label: "Quanto ti senti stressato/a in questo periodo? (0 = per niente, 10 = moltissimo)", type: "scale" },
+  { id: "9.11", label: "Che tipo di indicazioni preferisci?", type: "radio", opts: ["schema flessibile con porzioni e alternative", "menù preciso giorno per giorno", "non so"], req: true },
+  { id: "9.12", label: "Ogni quanto vorresti un controllo?", type: "radio", opts: ["2 settimane", "3–4 settimane", "6–8 settimane"] }
+]},
+
+{ key: "s10", level: 1, title: "Aspetti pratici", intro: "Servono a proporre soluzioni che puoi davvero preparare.", fields: [
+  { id: "10.1", label: "Chi cucina di solito in casa?", type: "radio", opts: ["io", "un'altra persona", "a turno", "nessuno, compro pronto"], req: true },
+  { id: "10.2", label: "Quanto tempo hai per cucinare nei giorni feriali?", type: "radio", opts: TEMPO_CUCINA, req: true },
+  { id: "10.3", label: "E nel weekend?", type: "radio", opts: TEMPO_CUCINA },
+  { id: "10.4", label: "Quanto ti senti capace in cucina? (0 = per niente, 10 = moltissimo)", type: "scale" },
+  { id: "10.4a", label: "Che attrezzature hai in cucina?", type: "multi", opts: ["forno", "microonde", "friggitrice ad aria", "piastra", "vaporiera", "robot da cucina", "frullatore"] },
+  { id: "10.5", label: "Prepareresti dei pasti in anticipo (es. la domenica per la settimana)?", type: "radio", opts: ["sì", "forse", "no"] },
+  { id: "10.6", label: "Dove pranzi nei giorni di lavoro?", type: "radio", opts: ["casa", "mensa", "porto il pranzo", "bar o ristorante", "salto il pranzo"], req: true, show: A => !is(A, "5.4", "non lavoro") },
+  { id: "10.6a", label: "Al lavoro hai frigo o microonde?", type: "multi", opts: ["frigo", "microonde", "nessuno"], exclusive: "nessuno", show: A => is(A, "10.6", "porto il pranzo") },
+  { id: "10.6b", label: "Al lavoro usi distributori automatici o il bar per gli spuntini?", type: "radio", opts: ["mai", "a volte", "quasi ogni giorno"], show: A => !is(A, "5.4", "non lavoro") },
+  { id: "10.7", label: "Quante volte a settimana mangi fuori a cena?", type: "number", unit: "volte", min: 0, max: 7, step: 1 },
+  { id: "10.7a", label: "Hai occasioni ricorrenti di pasti sociali o fuori casa (pranzi di famiglia, viaggi di lavoro, cene con amici)?", type: "textarea" },
+  { id: "10.8", label: "Quante persone mangiano con te a casa?", type: "number", unit: "persone", min: 0, max: 20, step: 1, half: true },
+  { id: "10.8b", label: "Ci sono bambini?", type: "yesno", half: true },
+  { id: "10.8a", label: "C'è una cucina di tradizione o regionale a cui tieni?", type: "text" },
+  { id: "10.9", label: "Budget per la spesa alimentare", type: "radio", opts: ["contenuto", "medio", "non è un problema"] },
+  { id: "10.10", label: "Dove fai la spesa di solito?", type: "multi", opts: ["supermercato", "discount", "mercato", "negozi", "online"] }
+]},
+
+/* ---------------- LIVELLO 2 ---------------- */
+{ key: "l2a", level: 2, title: "Misure ed esami", intro: "Tutto facoltativo: compila solo quello che hai.", fields: [
+  { id: "3.6", label: "Hai una misura recente della composizione corporea?", type: "radio", opts: ["no", "bioimpedenza", "plicometria", "DEXA"] },
+  { id: "3.6a", label: "Massa grassa", type: "number", unit: "%", min: 2, max: 70, step: 0.1, half: true, show: A => A["3.6"] && !is(A, "3.6", "no") },
+  { id: "3.6b", label: "Data della misura", type: "date", half: true, show: A => A["3.6"] && !is(A, "3.6", "no") },
+  { type: "info", html: "<p><b>Circonferenze per chi fa sport.</b></p>" + GUIDA_SPORT, show: sport },
+  { id: "8.12", label: "Circonferenza del braccio destro", type: "number", unit: "cm", min: 15, max: 70, step: 0.5, half: true, show: sport },
+  { id: "8.13", label: "Circonferenza della coscia destra", type: "number", unit: "cm", min: 30, max: 100, step: 0.5, half: true, show: sport },
+  { type: "info", html: "<p><b>Esami del sangue degli ultimi 12 mesi.</b> Copia i valori dal referto. Se il referto usa unità diverse da quelle indicate, scrivile nelle note in fondo alla pagina.</p>" },
+  { id: "4.9data", label: "Data del prelievo", type: "date" },
+  ...ESAMI.map(([nome, unita], i) => ({ id: "4.9_" + nome.replace(/\s+/g, "_"), label: nome.charAt(0).toUpperCase() + nome.slice(1), type: "number", unit: unita, min: 0, max: 100000, step: "any", half: true })),
+  { id: "4.10", label: "Oppure allega il referto (PDF o foto, massimo 5 MB per file)", type: "file" }
+]},
+
+{ key: "l2b", level: 2, title: "Una giornata alimentare", intro: "Descrivi cosa hai mangiato e bevuto ieri, se era un giorno normale, altrimenti l'ultimo giorno normale. Per le quantità usa misure di casa: cucchiai, bicchieri, fette, un piatto pieno o mezzo.", fields: [
+  ...PASTI.map((p, i) => ({ id: "6.26_" + i, label: p, type: "textarea", show: A => { const m = (A["5.8"] || {})[i]; return !(m && m.fai === "mai"); } })),
+  { id: "6.26_bevande", label: "Bevande durante la giornata", type: "textarea" }
+]},
+
+{ key: "l2c", level: 2, title: "I tuoi gusti, alimento per alimento", intro: "Per ogni alimento scegli un'opzione. Gli alimenti che non puoi mangiare per allergie o scelta alimentare non compaiono.", fields: [
+  { id: "7.9", type: "foods" }
+]},
+
+{ key: "l2d", level: 2, title: "Raccontami di te", intro: "Qui puoi scrivere liberamente, come se stessimo parlando. Non c'è una lunghezza giusta. Se vuoi, puoi partire da una di queste domande.", fields: [
+  { type: "info", html: "<ul><li>Com'è il tuo rapporto con il cibo, oggi e in passato?</li><li>Cosa ti aspetti da questo percorso, e cosa ti preoccupa?</li><li>C'è qualcosa della tua vita in questo periodo (lavoro, famiglia, salute, cambiamenti) che secondo te conta?</li><li>C'è qualcosa che non ti ho chiesto e che vorresti che sapessi?</li></ul>" },
+  { id: "11.1", label: "Il tuo racconto", type: "textarea", big: true }
+], noNotes: true }
+];
+
+/* Alimenti da nascondere in base ad allergie e scelte */
+function alimentiEsclusi(A) {
+  const ex = new Set();
+  const all = A["7.1a"] || [];
+  const intoll = A["7.2"] || [];
+  const diet = A["7.4"];
+  const add = arr => arr.forEach(x => ex.add(x));
+  const pesce = ALIMENTI[2][1].filter(x => !["gamberi", "calamari o polpo", "cozze o vongole"].includes(x));
+  const carne = ALIMENTI[3][1].filter(x => x !== "uova");
+  const latticini = ALIMENTI[4][1].filter(x => x !== "bevande vegetali");
+  if (all.includes("pesce")) add(pesce);
+  if (all.includes("crostacei")) add(["gamberi"]);
+  if (all.includes("molluschi")) add(["calamari o polpo", "cozze o vongole"]);
+  if (all.includes("uova")) add(["uova"]);
+  if (all.includes("latte")) add(latticini);
+  if (all.includes("soia")) add(["edamame", "tofu", "tempeh"]);
+  if (all.includes("arachidi")) add(["burro di arachidi"]);
+  if (all.includes("frutta a guscio")) add(["noci", "mandorle", "nocciole", "pistacchi"]);
+  /* glutine e lattosio: non si nascondono, esistono le versioni senza glutine o senza lattosio */
+  if (diet === "pescetariana") add(carne);
+  if (diet === "vegetariana con latte e uova") { add(carne); add(ALIMENTI[2][1]); }
+  if (diet === "vegetariana con solo latte") { add(carne); add(ALIMENTI[2][1]); add(["uova"]); }
+  if (diet === "vegana") { add(carne); add(ALIMENTI[2][1]); add(["uova"]); add(latticini); }
+  return ex;
+}
+</script>
+<script>(function () {
+"use strict";
+
+const STORE_KEY = FORM_META.storeKey;
+const MAX_FILE = 5 * 1024 * 1024;
+const $ = (sel, el = document) => el.querySelector(sel);
+const h = (tag, attrs = {}, ...kids) => {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === false || v == null) continue;
+    if (k === "class") e.className = v;
+    else if (k === "html") e.innerHTML = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? "" : v);
+  }
+  for (const kid of kids.flat()) if (kid != null && kid !== false) e.append(kid.nodeType ? kid : document.createTextNode(kid));
+  return e;
+};
+const nowISO = () => new Date().toISOString();
+
+/* ---------------- stato ---------------- */
+let S = freshState();
+function freshState() {
+  return { A: {}, notes: {}, consents: {}, page: 0, created: nowISO(), l1done: false, l2done: false };
+}
+let FILES = []; // allegati: solo in memoria
+let storageOK = true;
+
+function save() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); storageOK = true; }
+  catch (e) { storageOK = false; }
+  const el = $("#saved");
+  if (el) el.textContent = storageOK ? "Salvato sul dispositivo" : "Salvataggio non disponibile";
+}
+let saveTimer;
+function saveSoon() { clearTimeout(saveTimer); saveTimer = setTimeout(save, 300); }
+function loadSaved() {
+  try { const raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+}
+function clearSaved() { try { localStorage.removeItem(STORE_KEY); } catch (e) {} }
+
+/* ---------------- pagine ---------------- */
+const L1 = SECTIONS.filter(s => s.level === 1);
+const L2 = SECTIONS.filter(s => s.level === 2);
+const PAGES = L2.length
+  ? [{ kind: "consent" }, ...L1.map(s => ({ kind: "section", s })), { kind: "endL1" }, ...L2.map(s => ({ kind: "section", s })), { kind: "final" }]
+  : [{ kind: "consent" }, ...L1.map(s => ({ kind: "section", s })), { kind: "final" }];
+const LIVELLO_FINALE = L2.length ? 2 : 1;
+const IDX_ENDL1 = PAGES.findIndex(p => p.kind === "endL1");
+
+/* ---------------- utilità ---------------- */
+function visible(f) { return !f.show || !!f.show(S.A); }
+function isEmpty(v) {
+  if (v == null || v === "") return true;
+  if (Array.isArray(v)) return v.length === 0;
+  if (typeof v === "object") return Object.keys(v).length === 0;
+  return false;
+}
+function age(dob) {
+  if (!dob) return null;
+  const d = new Date(dob + "T00:00:00"), n = new Date();
+  let a = n.getFullYear() - d.getFullYear();
+  const m = n.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && n.getDate() < d.getDate())) a--;
+  return a;
+}
+function num(v) { if (v == null || v === "") return null; const x = Number(String(v).replace(",", ".")); return isNaN(x) ? NaN : x; }
+
+/* Criteri che richiedono una valutazione personalizzata (solo per il messaggio neutro) */
+function richiedeValutazione(A) {
+  const si = id => A[id] === "sì";
+  if (["2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "2.12"].some(si)) return true;
+  const scoff = ["2.13", "2.14", "2.15", "2.16", "2.17"].filter(si).length;
+  if (scoff >= 2) return true;
+  const peso = num(A["3.1"]), alt = num(A["3.3"]), persi = num(A["2.10a"]);
+  if (si("2.10") && peso && persi && persi / (peso + persi) > 0.05) return true;
+  if (peso && alt && peso / Math.pow(alt / 100, 2) < 18.5) return true;
+  return false;
+}
+
+/* ---------------- rendering dei campi ---------------- */
+function chipGroup(f, name, type, opts, getV, setV, cls = "") {
+  const box = h("div", { class: "chips " + cls, role: type === "radio" ? "radiogroup" : "group" });
+  for (const o of opts) {
+    const inp = h("input", { type, name, value: o });
+    const cur = getV();
+    if (type === "radio" ? cur === o : Array.isArray(cur) && cur.includes(o)) inp.checked = true;
+    inp.addEventListener("change", () => {
+      if (type === "radio") setV(o);
+      else {
+        let arr = Array.isArray(getV()) ? getV().slice() : [];
+        if (inp.checked) {
+          if (f.exclusive && o === f.exclusive) arr = [o];
+          else { arr = arr.filter(x => x !== f.exclusive); arr.push(o); }
+        } else arr = arr.filter(x => x !== o);
+        setV(arr);
+        if (f.exclusive) box.querySelectorAll("input").forEach(i => { i.checked = arr.includes(i.value); });
+      }
+    });
+    box.append(h("label", { class: "chip" }, inp, h("span", {}, o)));
+  }
+  return box;
+}
+
+function inputFor(f, getV, setV, idAttr) {
+  const t = f.type;
+  if (["text", "email", "tel", "date", "time"].includes(t)) {
+    const i = h("input", { type: t, id: idAttr, autocomplete: f.auto || "off" });
+    i.value = getV() || "";
+    i.addEventListener("input", () => setV(i.value));
+    return i;
+  }
+  if (t === "number") {
+    const i = h("input", { type: "text", inputmode: "decimal", id: idAttr, autocomplete: "off" });
+    i.value = getV() ?? "";
+    i.addEventListener("input", () => setV(i.value.trim()));
+    return f.unit ? h("div", { class: "unit-wrap" }, i, h("span", { class: "unit" }, f.unit)) : i;
+  }
+  if (t === "textarea") {
+    const i = h("textarea", { id: idAttr, class: f.big ? "big" : "" });
+    i.value = getV() || "";
+    i.addEventListener("input", () => setV(i.value));
+    return i;
+  }
+  return null;
+}
+
+function renderField(f, sec) {
+  if (f.type === "info") {
+    const d = h("div", { class: "info field", html: f.html });
+    d._f = f; return d;
+  }
+  const wrap = h("div", { class: "field", "data-fid": f.id });
+  wrap._f = f;
+  const lid = "f_" + f.id.replace(/[^\w]/g, "_");
+  const getV = () => S.A[f.id];
+  const setV = v => { S.A[f.id] = v; onChange(wrap); };
+  const lab = f.label ? h(["radio", "yesno", "multi", "scale", "grid", "meals", "repeat", "foods"].includes(f.type) ? "legend" : "label",
+    { class: "label" + (f.req ? " req" : ""), for: lid }, f.label) : null;
+  const help = f.help ? h("div", { class: "help" }, f.help) : null;
+  let body;
+
+  switch (f.type) {
+    case "radio": body = chipGroup(f, lid, "radio", f.opts, getV, setV, f.opts.length > 4 || f.opts.some(o => o.length > 22) ? "col" : ""); break;
+    case "yesno": body = chipGroup(f, lid, "radio", SN, getV, setV); break;
+    case "scale": body = chipGroup(f, lid, "radio", ["0","1","2","3","4","5","6","7","8","9","10"], getV, setV, "scale"); break;
+    case "multi":
+      if (f.groups) {
+        body = h("div", {});
+        f.groups.forEach(([g, opts]) => body.append(h("div", { class: "group-title" }, g), chipGroup(f, lid, "checkbox", opts, getV, setV, "col")));
+      } else body = chipGroup(f, lid, "checkbox", f.opts, getV, setV, f.inline ? "" : "col");
+      break;
+    case "grid": {
+      body = h("div", { class: "card" });
+      f.rows.forEach(([rk, rl]) => {
+        const g = () => (S.A[f.id] || {})[rk];
+        const s = v => { S.A[f.id] = Object.assign({}, S.A[f.id], { [rk]: v }); onChange(wrap); };
+        body.append(h("div", { class: "row" }, h("div", { class: "row-label" }, rl), chipGroup(f, lid + "_" + rk, "radio", f.cols, g, s)));
+      });
+      break;
+    }
+    case "meals": {
+      body = h("div", { class: "card" });
+      PASTI.forEach((p, i) => {
+        const cur = () => (S.A[f.id] || {})[i] || {};
+        const upd = (k, v) => { const all = Object.assign({}, S.A[f.id]); all[i] = Object.assign({}, all[i], { [k]: v }); S.A[f.id] = all; onChange(wrap); };
+        const time = h("input", { type: "time", "aria-label": "Orario " + p }); time.value = cur().ora || "";
+        time.addEventListener("input", () => upd("ora", time.value));
+        const sel = h("select", { "aria-label": "Dove " + p }, h("option", { value: "" }, "Dove?"), ...["casa", "lavoro", "bar", "fuori"].map(o => h("option", { value: o }, o)));
+        sel.value = cur().dove || "";
+        sel.addEventListener("change", () => upd("dove", sel.value));
+        const controls = h("div", { class: "meal-controls" }, time, sel);
+        const chips = chipGroup(f, lid + "_m" + i, "radio", ["sempre", "a volte", "mai"], () => cur().fai, v => { upd("fai", v); controls.style.display = v === "mai" ? "none" : ""; });
+        if (cur().fai === "mai") controls.style.display = "none";
+        body.append(h("div", { class: "row meal" }, h("div", { class: "row-label" }, p), chips, controls));
+      });
+      break;
+    }
+    case "repeat": {
+      body = h("div", {});
+      const list = h("div", {});
+      const draw = () => {
+        list.innerHTML = "";
+        (S.A[f.id] || []).forEach((item, idx) => {
+          const card = h("div", { class: "rep-item" },
+            h("div", { class: "rep-head" }, h("span", {}, "#" + (idx + 1)),
+              h("button", { type: "button", class: "btn link", onclick: () => { const arr = (S.A[f.id] || []).slice(); arr.splice(idx, 1); S.A[f.id] = arr; draw(); onChange(wrap); } }, "Rimuovi")));
+          f.sub.forEach(sf => {
+            const sid = lid + "_" + idx + "_" + sf.id;
+            const el = inputFor(sf, () => (S.A[f.id][idx] || {})[sf.id], v => { S.A[f.id][idx] = Object.assign({}, S.A[f.id][idx], { [sf.id]: v }); onChange(wrap); }, sid);
+            card.append(h("div", { class: "field" }, h("label", { class: "label", for: sid }, sf.label), el));
+          });
+          list.append(card);
+        });
+      };
+      draw();
+      body.append(list, h("button", { type: "button", class: "btn ghost small", onclick: () => { S.A[f.id] = (S.A[f.id] || []).concat([{}]); draw(); onChange(wrap); const ins = list.querySelectorAll("input"); const last = list.lastElementChild; if (last) last.querySelector("input")?.focus(); } }, "+ " + (f.add || "Aggiungi")));
+      break;
+    }
+    case "file": {
+      const inp = h("input", { type: "file", id: lid, accept: "application/pdf,image/*", multiple: true });
+      const ul = h("ul", { class: "files" });
+      const drawList = () => {
+        ul.innerHTML = "";
+        FILES.forEach((fl, idx) => ul.append(h("li", {}, fl.nome + " (" + Math.round(fl.dimensione / 1024) + " KB) ",
+          h("button", { type: "button", class: "btn link", onclick: () => { FILES.splice(idx, 1); drawList(); } }, "Rimuovi"))));
+      };
+      const msg = h("div", { class: "err", role: "status" });
+      inp.addEventListener("change", () => {
+        msg.textContent = "";
+        [...inp.files].forEach(file => {
+          if (file.size > MAX_FILE) { msg.textContent = file.name + " supera 5 MB e non è stato aggiunto."; return; }
+          const r = new FileReader();
+          r.onload = () => { FILES.push({ campo: "4.10", nome: file.name, tipo: file.type, dimensione: file.size, dati: r.result }); drawList(); };
+          r.readAsDataURL(file);
+        });
+        inp.value = "";
+      });
+      drawList();
+      body = h("div", {}, inp, msg, ul, h("div", { class: "small" }, "Gli allegati restano solo in questa pagina: aggiungili poco prima di scaricare il file finale."));
+      break;
+    }
+    case "foods": {
+      body = h("div", {});
+      const ex = alimentiEsclusi(S.A);
+      const short = ["volentieri", "lo mangio", "non mi piace", "mai"];
+      ALIMENTI.forEach(([g, items], gi) => {
+        const shown = items.filter(x => !ex.has(x));
+        if (!shown.length) return;
+        const done = () => shown.filter(x => (S.A["7.9"] || {})[x]).length;
+        const cnt = h("span", { class: "count" }, " · " + done() + "/" + shown.length);
+        const det = h("details", { class: "foodgroup card", open: gi === 0 }, h("summary", {}, g, cnt));
+        shown.forEach(food => {
+          const g2 = () => { const v = (S.A["7.9"] || {})[food]; return v ? short[SCALA_ALIMENTI.indexOf(v)] : undefined; };
+          const s2 = v => { S.A["7.9"] = Object.assign({}, S.A["7.9"], { [food]: SCALA_ALIMENTI[short.indexOf(v)] }); cnt.textContent = " · " + done() + "/" + shown.length; onChange(wrap); };
+          det.append(h("div", { class: "row" }, h("div", { class: "row-label" }, food), chipGroup({}, lid + "_" + gi + "_" + food.replace(/\W/g, "_"), "radio", short, g2, s2)));
+        });
+        body.append(det);
+      });
+      body.prepend(h("p", { class: "small" }, "Volentieri = lo mangio volentieri · Lo mangio · Non mi piace = non mi piace ma posso mangiarlo · Mai = non lo mangio mai"));
+      break;
+    }
+    default: body = inputFor(f, getV, setV, lid);
+  }
+
+  const isGroup = lab && lab.tagName === "LEGEND";
+  const inner = isGroup ? h("fieldset", {}, lab, help, body) : h("div", {}, lab, help, body);
+  wrap.append(inner, h("div", { class: "err", role: "alert" }));
+  return wrap;
+}
+
+function onChange(wrap) {
+  if (wrap) { wrap.classList.remove("invalid"); const e = wrap.querySelector(":scope > .err"); if (e) e.textContent = ""; }
+  refreshVisibility();
+  saveSoon();
+}
+
+function refreshVisibility() {
+  document.querySelectorAll("main .field, main .info").forEach(el => {
+    if (el._f) el.classList.toggle("hidden", !visible(el._f));
+  });
+}
+
+/* ---------------- validazione ---------------- */
+function validateField(f) {
+  if (f.type === "info" || !visible(f)) return "";
+  const v = S.A[f.id];
+  if (f.type === "number" && !isEmpty(v)) {
+    const x = num(v);
+    if (isNaN(x)) return "Scrivi solo un numero.";
+    if (f.min != null && x < f.min || f.max != null && x > f.max) return "Controlla il valore: deve essere tra " + f.min + " e " + f.max + ".";
+  }
+  if (f.id === "1.5" && v) { const a = age(v); if (a == null || a > 110 || a < 0) return "Controlla la data di nascita."; }
+  if (f.type === "email" && v && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v)) return "Controlla l'indirizzo email.";
+  if (!f.req) return "";
+  if (f.type === "grid") return f.rows.every(([rk]) => (v || {})[rk]) ? "" : "Rispondi a tutte le righe.";
+  if (f.type === "meals") return PASTI.every((p, i) => (v || {})[i] && v[i].fai) ? "" : "Indica per ogni pasto se lo fai.";
+  if (f.type === "repeat") return (v || []).some(x => Object.values(x || {}).some(y => !isEmpty(y))) ? "" : "Aggiungi almeno una voce.";
+  return isEmpty(v) ? "Questa risposta è necessaria." : "";
+}
+
+function validatePage(sec) {
+  let first = null;
+  document.querySelectorAll("main .field[data-fid]").forEach(wrap => {
+    const msg = validateField(wrap._f);
+    wrap.classList.toggle("invalid", !!msg);
+    wrap.querySelector(":scope > .err").textContent = msg;
+    if (msg && !first) first = wrap;
+  });
+  if (first) { first.scrollIntoView({ behavior: "smooth", block: "center" }); const i = first.querySelector("input, textarea, select"); if (i) setTimeout(() => i.focus({ preventScroll: true }), 300); }
+  return !first;
+}
+
+/* ---------------- informativa ---------------- */
+function informativaHTML() {
+  const c = CONFIG;
+  return `
+<h3>Cosa questo servizio è e cosa non è</h3>
+<p>Questo questionario fa parte di un progetto di studio di ${c.titolare}, studente del corso di laurea magistrale in Scienze della Nutrizione Umana. <b>${c.titolare} non è un biologo nutrizionista abilitato.</b></p>
+<ul><li>Non è una prestazione sanitaria: non fornisce diagnosi, terapie o diete personalizzate.</li>
+<li>Le indicazioni che riceverai sono consigli generali di educazione alimentare, basati sulle linee guida pubbliche (LARN, Linee guida CREA per una sana alimentazione).</li>
+<li>Non sostituisce il parere del tuo medico, di un biologo nutrizionista o di un dietista.</li>
+<li>Il servizio è riservato a persone maggiorenni.</li></ul>
+<h3>Chi tratta i tuoi dati</h3>
+<p>Titolare del trattamento: ${c.titolare}. Puoi contattarlo ${c.contatto}.</p>
+<h3>Quali dati</h3>
+<p>Dati anagrafici e di contatto; dati relativi alla salute (misure, patologie, farmaci, integratori, esami, sintomi, ciclo mestruale, rapporto con il cibo), che sono categorie particolari di dati (art. 9 GDPR); abitudini e stile di vita.</p>
+<h3>Perché</h3>
+<table><tr><th>Finalità</th><th>Base giuridica</th><th>Obbligatoria</th></tr>
+<tr><td>A. Verificare se il servizio è adatto a te e preparare consigli generali di educazione alimentare</td><td>consenso esplicito (art. 6.1.a, 9.2.a)</td><td>sì</td></tr>
+<tr><td>B. Collaudare e migliorare lo strumento</td><td>consenso esplicito</td><td>sì</td></tr>
+<tr><td>C. Uso anonimo e aggregato per studio o tesi</td><td>consenso esplicito</td><td>no</td></tr>
+<tr><td>D. Condivisione con un professionista abilitato che supervisiona il progetto</td><td>consenso esplicito</td><td>no</td></tr></table>
+<p>Nessuna decisione che ti riguarda viene presa in modo solo automatico: i calcoli sono sempre rivisti da una persona.</p>
+<h3>Come e dove</h3>
+<p>Le risposte sono conservate solo sul computer del titolare, con disco cifrato e accesso protetto, senza servizi cloud. Il file che invii per email o WhatsApp passa per quei servizi: puoi proteggerlo con una password alla fine del questionario. Nessun tuo dato personale viene inviato a servizi di intelligenza artificiale. I dati non vengono diffusi, venduti o usati per pubblicità. Mentre compili, le risposte sono salvate solo in questo browser, su questo dispositivo.</p>
+<p>Se apri il questionario da un link, il sito che lo ospita (GitHub Pages) fornisce solo la pagina vuota: le tue risposte non vengono inviate a quel sito e restano sul tuo dispositivo finché non invii tu il file. Come ogni sito, registra dati tecnici di navigazione, per esempio l'indirizzo IP.</p>
+<h3>Per quanto tempo</h3>
+<p>Fino alla revoca del consenso e comunque non oltre ${c.conservazioneMesi} mesi dall'ultimo contatto; poi vengono cancellati. I dati resi anonimi possono essere conservati.</p>
+<h3>I tuoi diritti</h3>
+<p>Puoi chiedere in ogni momento accesso, rettifica, cancellazione, limitazione e copia dei tuoi dati (artt. 15–20 GDPR) e revocare il consenso (art. 7.3) ${c.contatto}. Puoi presentare reclamo al Garante per la protezione dei dati personali (www.garanteprivacy.it).</p>`;
+}
+
+const CONSENTS = [
+  ["1.1", "Dichiaro di essere maggiorenne.", true],
+  ["1.2", "Ho letto l'informativa e ho capito che questo servizio non è una prestazione sanitaria e che " + CONFIG.titolare + " non è un professionista abilitato.", true],
+  ["1.3", "Acconsento al trattamento dei miei dati, compresi quelli relativi alla salute, per le finalità A e B.", true],
+  ["1.3a", "Acconsento all'uso dei miei dati in forma anonima e aggregata per studio (finalità C).", false],
+  ["1.3b", "Acconsento alla condivisione dei miei dati con un professionista abilitato che supervisiona il progetto (finalità D).", false]
+];
+
+/* ---------------- pagine speciali ---------------- */
+function pageConsent() {
+  const saved = loadSaved();
+  const box = h("div", {});
+  box.append(h("h1", {}, FORM_META.titolo), h("p", { class: "intro" }, FORM_META.intro));
+  box.append(h("details", { class: "guide", open: !saved }, h("summary", {}, "Come funziona"),
+    h("ol", { class: "passi" },
+      h("li", {}, "Compila con Safari o Chrome. Se hai aperto il link dentro WhatsApp, tocca i tre puntini o l'icona della bussola e scegli “Apri nel browser”."),
+      h("li", {}, "Le risposte si salvano da sole su questo dispositivo. Se ti interrompi, riapri lo stesso link con lo stesso browser e riprendi da dove eri."),
+      h("li", {}, "Alla fine prepari un file con le tue risposte e lo mandi a " + CONFIG.titolare + " su WhatsApp o per email: ti spiego come, passo per passo."),
+      h("li", {}, "Nulla viene inviato finché non sei tu a mandare il file."))));
+  const inf = h("details", { class: "guide", open: true }, h("summary", {}, "Informativa sulla privacy"), h("div", { class: "informativa", html: informativaHTML() }));
+  box.append(inf, h("h2", {}, "Consensi"));
+  const card = h("div", { class: "card" });
+  CONSENTS.forEach(([id, txt, req]) => {
+    const cid = "c_" + id.replace(/\./g, "_");
+    const cb = h("input", { type: "checkbox", id: cid });
+    cb.checked = !!(S.consents[id] && S.consents[id].v);
+    cb.addEventListener("change", () => { S.consents[id] = { v: cb.checked, at: nowISO() }; $("#consent-err").textContent = ""; saveSoon(); });
+    card.append(h("label", { class: "consent", for: cid }, cb, h("span", { class: req ? "req" : "" }, txt + (req ? "" : " (facoltativo)"))));
+  });
+  box.append(card, h("div", { id: "consent-err", class: "err", role: "alert" }));
+  return box;
+}
+
+function consentOK() {
+  const miss = CONSENTS.filter(([id, , req]) => req && !(S.consents[id] && S.consents[id].v));
+  if (!miss.length) return true;
+  $("#consent-err").textContent = miss.some(m => m[0] === "1.3")
+    ? "Senza il consenso al trattamento dei dati non è possibile proseguire."
+    : "Per proseguire servono le dichiarazioni obbligatorie (*).";
+  return false;
+}
+
+function dispositivo() {
+  const ua = navigator.userAgent || "";
+  if (/iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) return "iphone";
+  if (/Android/.test(ua)) return "android";
+  return "computer";
+}
+
+function guidaInvio(pw, share) {
+  const chi = CONFIG.titolare;
+  const pwNota = "Se hai messo una password, mandala a " + chi + " in un messaggio separato (o diglielo a voce), non insieme al file.";
+  const sez = [
+    ["iphone", "Su iPhone o iPad", [
+      "Tocca “Invia il file”: si apre il menu di condivisione di iPhone.",
+      "Scegli WhatsApp (se non lo vedi, scorri la fila di app o tocca “Altro”), cerca " + chi + " e tocca “Invia”.",
+      (share ? "Se “Invia il file” dà errore: tocca" : "Tocca") + " “Salva il file” e poi “Scarica”. Il file finisce nell'app File, cartella Download (in Safari lo vedi anche toccando la freccia blu in alto).",
+      "Poi apri WhatsApp, entra nella chat con " + chi + ", tocca “+” → “Documento”, cerca il file nella cartella Download (nome che inizia con “" + FORM_META.prefisso + "_”) e invialo.",
+      pwNota]],
+    ["android", "Su Android", [
+      "Tocca “Invia il file”: si apre il menu Condividi.",
+      "Scegli WhatsApp, cerca " + chi + " e tocca la freccia verde per inviare.",
+      (share ? "Se “Invia il file” dà errore: tocca" : "Tocca") + " “Salva il file”. Il file finisce nella cartella Download (compare la notifica “Download completato”).",
+      "Poi apri WhatsApp, entra nella chat con " + chi + ", tocca la graffetta → “Documento” → “Sfoglia altri documenti” → Download, scegli il file (nome che inizia con “" + FORM_META.prefisso + "_”) e invialo.",
+      pwNota]],
+    ["computer", "Su computer", [
+      "Clicca “Salva il file”: il file finisce nella cartella Download.",
+      "Apri WhatsApp Web o WhatsApp per computer, entra nella chat con " + chi + ", clicca “+” (o la graffetta) → “Documento” e scegli il file dalla cartella Download.",
+      "In alternativa allega il file a un'email.",
+      pwNota]]
+  ];
+  const mio = dispositivo();
+  const box = h("div", { class: "stack" });
+  sez.forEach(([k, titolo, passi]) => box.append(h("details", { class: "guide", open: k === mio },
+    h("summary", {}, titolo + (k === mio ? " (il tuo dispositivo)" : "")),
+    h("ol", { class: "passi" }, passi.filter((x, i) => (pw || i < passi.length - 1) && (share || k === "computer" || i > 1)).map(x => h("li", {}, x))))));
+  return box;
+}
+
+function exportBox(level) {
+  const box = h("div", { class: "card stack" });
+  const pw1 = h("input", { type: "password", id: "pw1", autocomplete: "new-password" });
+  const pw2 = h("input", { type: "password", id: "pw2", autocomplete: "new-password" });
+  const cryptoOK = !!(window.crypto && crypto.subtle);
+  const msg = h("div", { role: "status" });
+  const step2 = h("div", { class: "stack", id: "step2" });
+  let pronto = null;
+  const scarica = () => {
+    const a = h("a", { href: URL.createObjectURL(pronto.blob), download: pronto.name });
+    document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+    msg.className = "ok"; msg.innerHTML = "<b>File salvato:</b> " + pronto.name + ". Ora invialo seguendo i passi qui sotto.";
+  };
+  const condividi = async () => {
+    try {
+      await navigator.share({ files: [pronto.file] });
+      msg.className = "ok"; msg.innerHTML = "<b>Fatto.</b> Se non l'hai inviato, puoi toccare di nuovo “Invia il file” oppure usare “Salva il file”.";
+    } catch (e) {
+      if (e && e.name === "AbortError") return;
+      msg.className = "err"; msg.textContent = "L'invio diretto non ha funzionato su questo dispositivo: usa “Salva il file” e segui i passi qui sotto.";
+    }
+  };
+  const prepara = async () => {
+    msg.className = ""; msg.textContent = ""; step2.innerHTML = "";
+    if (pw1.value || pw2.value) {
+      if (pw1.value.length < 6) { msg.className = "err"; msg.textContent = "La password deve avere almeno 6 caratteri."; return; }
+      if (pw1.value !== pw2.value) { msg.className = "err"; msg.textContent = "Le due password non coincidono."; return; }
+    }
+    btnPrep.disabled = true; btnPrep.textContent = "Preparo il file…";
+    try {
+      const { blob, name } = await buildFile(level, pw1.value);
+      const file = new File([blob], name, { type: "text/plain" });
+      pronto = { blob, name, file, pw: !!pw1.value };
+      const puoCondividere = !!(navigator.canShare && navigator.canShare({ files: [file] }));
+      step2.append(h("div", { class: "label" }, "2. Invia il file a " + CONFIG.titolare),
+        h("div", { class: "chips" },
+          puoCondividere ? h("button", { type: "button", class: "btn", id: "btn-share", onclick: condividi }, "Invia il file (WhatsApp, Mail…)") : null,
+          h("button", { type: "button", class: puoCondividere ? "btn ghost" : "btn", id: "btn-download", onclick: scarica }, "Salva il file")),
+        h("p", { class: "small" }, "Nome del file: " + name),
+        guidaInvio(pronto.pw, puoCondividere));
+    } catch (e) {
+      msg.className = "err"; msg.textContent = "Non è stato possibile creare il file. Riprova.";
+    }
+    btnPrep.disabled = false; btnPrep.textContent = "1. Prepara di nuovo il file";
+  };
+  [pw1, pw2].forEach(x => x.addEventListener("input", () => { if (pronto) { pronto = null; step2.innerHTML = ""; btnPrep.textContent = "1. Prepara il file"; msg.className = ""; msg.textContent = "Hai cambiato la password: prepara di nuovo il file."; } }));
+  if (cryptoOK) {
+    box.append(h("div", {}, h("div", { class: "label" }, "Proteggi il file con una password (consigliato)"),
+      h("div", { class: "help" }, "Chi riceve il file potrà aprirlo solo con questa password. Lascia vuoto se non vuoi usarla."),
+      h("div", { class: "grid2" }, h("div", { class: "field" }, h("label", { class: "label", for: "pw1" }, "Password"), pw1), h("div", { class: "field" }, h("label", { class: "label", for: "pw2" }, "Ripeti la password"), pw2))));
+  }
+  const btnPrep = h("button", { type: "button", class: "btn", id: "btn-prepara", onclick: prepara }, "1. Prepara il file");
+  box.append(btnPrep, msg, step2);
+  return box;
+}
+
+function pageEndL1() {
+  S.l1done = true; saveSoon();
+  const box = h("div", {}, h("h1", {}, "Prima parte completata"),
+    h("p", { class: "intro" }, "Grazie! Puoi inviare subito le risposte oppure continuare con la seconda parte, che mi aiuta a conoscerti meglio: misure ed esami, una giornata alimentare, i tuoi gusti e uno spazio libero."));
+  if (richiedeValutazione(S.A)) box.append(h("div", { class: "alert" }, "Grazie. Alcune risposte richiedono una valutazione personalizzata: dopo aver ricevuto il file ti contatterò io."));
+  box.append(h("h2", {}, "Continua"), h("button", { type: "button", class: "btn", id: "btn-l2", onclick: () => go(IDX_ENDL1 + 1) }, "Continua con la seconda parte (circa 15 minuti)"),
+    h("h2", {}, "Oppure invia ora la prima parte"), h("p", { class: "small" }, "Se invii ora, potrai completare la seconda parte più tardi da questo stesso dispositivo e inviare un nuovo file."), exportBox(1));
+  return box;
+}
+
+function pageFinal() {
+  S.l2done = true; saveSoon();
+  const box = h("div", {}, h("h1", {}, "Questionario completato"),
+    h("p", { class: "intro" }, "Grazie per il tempo che hai dedicato. Ora crea il file con le tue risposte e invialo."));
+  if (richiedeValutazione(S.A)) box.append(h("div", { class: "alert" }, "Alcune risposte richiedono una valutazione personalizzata: dopo aver ricevuto il file ti contatterò io."));
+  box.append(exportBox(LIVELLO_FINALE));
+  let armed = false;
+  const del = h("button", { type: "button", class: "btn ghost", id: "btn-clear", onclick: () => {
+    if (!armed) { armed = true; del.textContent = "Tocca di nuovo per confermare la cancellazione"; return; }
+    clearSaved(); S = freshState(); FILES = []; go(0);
+  } }, "Cancella le risposte da questo dispositivo");
+  box.append(h("h2", {}, "Dopo l'invio"), h("p", { class: "small" }, "Se usi un dispositivo condiviso, cancella le risposte dopo aver inviato il file."), del);
+  return box;
+}
+
+/* ---------------- esportazione ---------------- */
+function collectAnswers(level) {
+  const out = {};
+  SECTIONS.filter(s => s.level <= level).forEach(sec => sec.fields.forEach(f => {
+    if (!f.id || f.type === "info" || f.type === "file" || !visible(f)) return;
+    let v = S.A[f.id];
+    if (isEmpty(v)) return;
+    if (f.type === "number") v = num(v);
+    if (f.type === "repeat") v = v.filter(x => Object.values(x || {}).some(y => !isEmpty(y)));
+    if (f.type === "meals") v = PASTI.map((p, i) => Object.assign({ pasto: p }, v[i] || {}));
+    if (f.type === "foods") { const ex = alimentiEsclusi(S.A); v = Object.fromEntries(Object.entries(v).filter(([k]) => !ex.has(k))); }
+    if (!isEmpty(v)) out[f.id] = v;
+  }));
+  const eta = age(S.A["1.5"]);
+  return { out, eta };
+}
+
+function slug(s) { return (s || "paziente").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^\w]+/g, "-").replace(/^-|-$/g, "").toLowerCase() || "paziente"; }
+
+const b64 = buf => { let s = ""; const b = new Uint8Array(buf); for (let i = 0; i < b.length; i += 0x8000) s += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(s); };
+
+async function encrypt(text, password) {
+  const enc = new TextEncoder();
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const base = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({ name: "PBKDF2", salt, iterations: 250000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt"]);
+  const ct = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, enc.encode(text));
+  return { schema: "anamnesi-nutrizionale-cifrata", v: 1, kdf: { name: "PBKDF2", hash: "SHA-256", iterazioni: 250000, salt: b64(salt) }, cifra: { name: "AES-GCM", iv: b64(iv) }, dati: b64(ct) };
+}
+
+async function buildFile(level, password) {
+  const { out, eta } = collectAnswers(level);
+  const payload = {
+    schema: FORM_META.schema, versione: CONFIG.versione, creato: S.created, esportato: nowISO(),
+    livello: level, eta_alla_compilazione: eta, consensi: S.consents, risposte: out,
+    note: Object.fromEntries(Object.entries(S.notes).filter(([, v]) => v && v.trim())),
+    allegati: FILES
+  };
+  const text = JSON.stringify(payload, null, 2);
+  const date = nowISO().slice(0, 10);
+  const base = FORM_META.prefisso + "_" + slug(S.A["1.4"]) + "_" + date + (FORM_META.dueParti ? "_parte" + level : "");
+  if (password) {
+    const obj = await encrypt(text, password);
+    return { blob: new Blob([JSON.stringify(obj)], { type: "text/plain" }), name: base + "_protetto.txt" };
+  }
+  return { blob: new Blob([text], { type: "text/plain" }), name: base + ".txt" };
+}
+
+/* ---------------- navigazione ---------------- */
+function progress() {
+  const i = S.page;
+  let pct, label;
+  if (IDX_ENDL1 < 0) { const n = PAGES.length - 1; pct = i / n; label = i === 0 ? "Inizio" : i === n ? "Fine" : "Sezione " + i + " di " + (n - 1); }
+  else if (i <= IDX_ENDL1) { pct = i / IDX_ENDL1; label = i === 0 ? "Inizio" : i === IDX_ENDL1 ? "Prima parte completata" : "Prima parte · " + i + " di " + (IDX_ENDL1 - 1); }
+  else { const n = PAGES.length - 1 - IDX_ENDL1; const k = i - IDX_ENDL1; pct = k / n; label = k === n ? "Fine" : "Seconda parte · " + k + " di " + (n - 1); }
+  $("#bar").style.width = Math.round(pct * 100) + "%";
+  $("#step").textContent = label;
+}
+
+function render() {
+  const p = PAGES[S.page];
+  const main = $("main");
+  main.innerHTML = "";
+  if (p.kind === "consent") main.append(pageConsent());
+  else if (p.kind === "endL1") main.append(pageEndL1());
+  else if (p.kind === "final") main.append(pageFinal());
+  else if (p.kind === "stopAge") main.append(p.el);
+  else {
+    const sec = p.s;
+    main.append(h("h1", {}, sec.title), h("p", { class: "intro" }, sec.intro));
+    if (sec.guide) main.append(h("details", { class: "guide" }, h("summary", {}, "Come mi misuro?"), h("div", { html: sec.guide })));
+    let pair = null;
+    sec.fields.forEach(f => {
+      const el = renderField(f, sec);
+      if (f.half) { if (!pair) { pair = h("div", { class: "grid2" }); main.append(pair); } pair.append(el); if (pair.children.length === 2) pair = null; }
+      else { pair = null; main.append(el); }
+    });
+    if (!sec.noNotes) {
+      const ta = h("textarea", { id: "note_" + sec.key });
+      ta.value = S.notes[sec.key] || "";
+      ta.addEventListener("input", () => { S.notes[sec.key] = ta.value; saveSoon(); });
+      main.append(h("div", { class: "field" }, h("label", { class: "label", for: "note_" + sec.key }, "Vuoi aggiungere qualcosa su questo argomento?"), ta));
+    }
+    refreshVisibility();
+  }
+  // barra di navigazione
+  const back = $("#back"), next = $("#next");
+  back.disabled = S.page === 0;
+  next.style.display = (p.kind === "final" || p.kind === "stopAge") ? "none" : "";
+  next.textContent = p.kind === "consent" ? "Inizia" : p.kind === "endL1" ? "Seconda parte" : (PAGES[S.page + 1] && PAGES[S.page + 1].kind === "final") ? "Concludi" : "Avanti";
+  progress();
+  window.scrollTo(0, 0);
+  const h1 = $("main h1"); if (h1) { h1.setAttribute("tabindex", "-1"); h1.focus({ preventScroll: true }); }
+}
+
+function go(i) { S.page = Math.max(0, Math.min(PAGES.length - 1, i)); save(); render(); }
+
+function next() {
+  const p = PAGES[S.page];
+  if (p.kind === "consent" && !consentOK()) return;
+  if (p.kind === "section" && !validatePage(p.s)) return;
+  if (p.kind === "section" && p.s.key === "s1") {
+    const a = age(S.A["1.5"]);
+    if (a != null && a < 18) {
+      const el = h("div", {}, h("h1", {}, "Grazie per l'interesse"),
+        h("p", {}, "Questo questionario è pensato per persone maggiorenni. Se hai meno di 18 anni, parlane con i tuoi genitori e con il tuo medico, che sapranno indicarti a chi rivolgerti."),
+        h("button", { type: "button", class: "btn ghost", onclick: () => { go(S.page); } }, "Ho sbagliato la data di nascita"));
+      main_stop(el); return;
+    }
+  }
+  go(S.page + 1);
+}
+function main_stop(el) {
+  const main = $("main"); main.innerHTML = ""; main.append(el);
+  $("#next").style.display = "none"; window.scrollTo(0, 0);
+}
+
+/* ---------------- avvio ---------------- */
+function start() {
+  $("#next").addEventListener("click", next);
+  $("#back").addEventListener("click", () => go(S.page - 1));
+  const saved = loadSaved();
+  if (saved && saved.A && (Object.keys(saved.A).length || saved.page > 0)) {
+    S = Object.assign(freshState(), saved);
+    const main = $("main");
+    main.append(h("h1", {}, "Bentornato/a"), h("p", { class: "intro" }, "Su questo dispositivo c'è una compilazione in corso."),
+      h("div", { class: "chips" },
+        h("button", { type: "button", class: "btn", id: "btn-resume", onclick: () => render() }, "Riprendi da dove eri rimasto/a"),
+        h("button", { type: "button", class: "btn ghost", id: "btn-restart", onclick: () => { clearSaved(); S = freshState(); FILES = []; render(); } }, "Ricomincia da capo")));
+    $("#next").style.display = "none"; $("#back").disabled = true; progress();
+  } else render();
+  save();
+}
+document.addEventListener("DOMContentLoaded", start);
+})();
+</script>
+</body>
+</html>
