@@ -103,6 +103,21 @@ main h1:focus { outline: none; }
 ol.passi { margin: 8px 0 0; padding-left: 22px; }
 ol.passi li { margin: 0 0 8px; }
 #btn-prepara:disabled { opacity: .6; }
+
+figure.fig { margin: 10px 0 14px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px; max-width: 340px; }
+figure.fig svg { display: block; width: 100%; height: auto; font: 11px system-ui, sans-serif; fill: var(--muted); }
+figure.fig figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.fig .f-corpo { fill: var(--accent-soft); stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-arto { fill: none; stroke: var(--accent-soft); stroke-width: 22; stroke-linecap: round; stroke-linejoin: round; }
+.fig .f-muro { stroke: var(--muted); stroke-width: 3; }
+.fig .f-libro { fill: var(--muted); }
+.fig .f-segno, .fig .f-rif { fill: none; stroke: var(--warn); stroke-width: 1.8; stroke-dasharray: 4 3; }
+.fig .f-punto { fill: var(--warn); }
+.fig .f-metro { stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+.fig .f-guida { stroke: var(--muted); stroke-width: 1; }
+.fig .f-freccia { stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-punta { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.fig .f-evid { fill: var(--accent); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -152,20 +167,31 @@ const MSV = ["mai", "a volte", "spesso"];
 const GIORNI = ["lun", "mar", "mer", "gio", "ven", "sab", "dom"];
 const TEMPO_CUCINA = ["meno di 15 min", "15–30 min", "30–60 min", "oltre 1 ora"];
 
+
+/* Disegni per la guida alle misure (SVG in linea, colori dal tema) */
+const FIG = {
+  altezza: `<svg viewBox="0 0 200 200" role="img" aria-label="Come misurare l'altezza: schiena al muro, libro sulla testa, segno sul muro"><line class="f-muro" x1="104" y1="6" x2="104" y2="192"/><line class="f-muro" x1="6" y1="192" x2="196" y2="192"/><circle class="f-corpo" cx="86" cy="33" r="12"/><rect class="f-corpo" x="76" y="47" width="27" height="62" rx="10"/><rect class="f-corpo" x="80" y="106" width="21" height="84" rx="7"/><rect class="f-libro" x="66" y="15" width="38" height="6" rx="1"/><line class="f-segno" x1="104" y1="21" x2="116" y2="21"/><line class="f-freccia" x1="130" y1="23" x2="130" y2="190"/><path class="f-punta" d="M126 30 L130 22 L134 30 M126 183 L130 191 L134 183"/><text x="138" y="100">altezza</text><text x="112" y="14">segno</text><text x="18" y="12">libro</text></svg>`,
+  vita: `<svg viewBox="0 0 250 180" role="img" aria-label="Circonferenza vita: a metà tra l'ultima costola e l'osso del bacino"><path class="f-corpo" d="M40 12 C36 45 44 72 52 94 C46 112 42 130 44 172 L116 172 C118 130 114 112 108 94 C116 72 124 45 120 12 Z"/><path class="f-rif" d="M52 70 Q80 84 108 70"/><path class="f-rif" d="M47 118 Q54 110 62 112 M113 118 Q106 110 98 112"/><line class="f-metro" x1="50" y1="94" x2="110" y2="94"/><circle class="f-punto" cx="108" cy="70" r="3"/><circle class="f-punto" cx="110" cy="116" r="3"/><line class="f-guida" x1="112" y1="70" x2="128" y2="70"/><line class="f-guida" x1="114" y1="94" x2="128" y2="94"/><line class="f-guida" x1="114" y1="116" x2="128" y2="116"/><text x="132" y="73">ultima costola</text><text x="132" y="97" class="f-evid">metro qui, a metà</text><text x="132" y="119">osso del bacino</text></svg>`,
+  fianchi: `<svg viewBox="0 0 250 180" role="img" aria-label="Circonferenza fianchi: dove i glutei sporgono di più, visti di lato"><path class="f-corpo" d="M78 8 C74 30 70 50 64 66 C50 80 44 100 52 120 C58 136 64 150 66 172 L104 172 C104 150 106 130 110 112 C118 92 124 70 120 44 L114 8 Z"/><line class="f-metro" x1="44" y1="100" x2="114" y2="100"/><line class="f-guida" x1="118" y1="100" x2="132" y2="100"/><text x="136" y="96" class="f-evid">dove i glutei</text><text x="136" y="110" class="f-evid">sporgono di più</text><text x="14" y="44">schiena</text><text x="128" y="44">pancia</text><text x="136" y="158">visto di lato,</text><text x="136" y="171">allo specchio</text></svg>`,
+  braccio: `<svg viewBox="0 0 220 170" role="img" aria-label="Braccio: gomito piegato ad angolo retto, punto a metà tra spalla e gomito"><path class="f-arto" d="M44 26 L44 124 L124 124"/><circle class="f-punto" cx="44" cy="16" r="3.5"/><circle class="f-punto" cx="36" cy="134" r="3.5"/><line class="f-metro" x1="30" y1="75" x2="58" y2="75"/><line class="f-guida" x1="62" y1="75" x2="80" y2="75"/><text x="54" y="18">punta della spalla</text><text x="46" y="154">punta del gomito</text><text x="84" y="72" class="f-evid">metà: segna qui</text><text x="84" y="86">poi lascia il braccio</text><text x="84" y="99">disteso e misura</text></svg>`,
+  coscia: `<svg viewBox="0 0 250 190" role="img" aria-label="Coscia: a metà tra la piega dell'inguine e il bordo superiore del ginocchio"><path class="f-corpo" d="M52 10 L112 10 C110 50 102 90 98 116 L100 182 L76 182 L74 116 C68 90 56 50 52 10 Z"/><path class="f-rif" d="M54 26 Q76 34 96 12"/><circle class="f-rif" cx="86" cy="126" r="10"/><line class="f-metro" x1="60" y1="70" x2="106" y2="70"/><line class="f-guida" x1="100" y1="26" x2="124" y2="26"/><line class="f-guida" x1="110" y1="70" x2="124" y2="70"/><line class="f-guida" x1="98" y1="116" x2="124" y2="116"/><text x="128" y="29">piega dell'inguine</text><text x="128" y="73" class="f-evid">metro qui, a metà</text><text x="128" y="112">bordo superiore</text><text x="128" y="125">del ginocchio</text></svg>`
+};
+const fig = (k, didascalia) => `<figure class="fig">${FIG[k]}<figcaption>${didascalia}</figcaption></figure>`;
+
 const GUIDA_MISURE = `
 <p><b>Ti servono:</b> una bilancia appoggiata su un pavimento duro (non su un tappeto), un metro da sarta non elastico e, per l'altezza, una persona che ti aiuti. Scrivi ogni numero subito dopo averlo letto.</p>
 <ul>
 <li><b>Peso.</b> Pesati al mattino, dopo essere andato/a in bagno e prima di colazione, senza vestiti o in biancheria intima. Usa sempre la stessa bilancia.</li>
-<li><b>Altezza.</b> Togli le scarpe e appoggia talloni, glutei e schiena al muro, talloni uniti e sguardo dritto. Chi ti aiuta appoggia un libro sulla tua testa, ben dritto contro il muro, e segna con una matita il punto sotto il libro. Misura dal pavimento al segno.</li>
-<li><b>Circonferenza vita.</b> In piedi, piedi uniti, pancia rilassata, sulla pelle nuda. Sul fianco trova l'ultima costola e l'osso del bacino: il metro va a metà strada fra i due, parallelo al pavimento, aderente ma senza stringere. Leggi il numero alla fine di un respiro normale, senza trattenere la pancia. Misura due volte; se le misure differiscono di più di 1 cm, fai una terza misura.</li>
-<li><b>Circonferenza fianchi.</b> In piedi, piedi uniti. Il metro passa dove i glutei sporgono di più (guardati di lato allo specchio), parallelo al pavimento.</li>
+<li><b>Altezza.</b> Togli le scarpe e appoggia talloni, glutei e schiena al muro, talloni uniti e sguardo dritto. Chi ti aiuta appoggia un libro sulla tua testa, ben dritto contro il muro, e segna con una matita il punto sotto il libro. Misura dal pavimento al segno.${fig("altezza", "Talloni, glutei e schiena contro il muro; il libro tocca la testa e il muro.")}</li>
+<li><b>Circonferenza vita.</b> In piedi, piedi uniti, pancia rilassata, sulla pelle nuda. Sul fianco trova l'ultima costola e l'osso del bacino: il metro va a metà strada fra i due, parallelo al pavimento, aderente ma senza stringere. Leggi il numero alla fine di un respiro normale, senza trattenere la pancia. Misura due volte; se le misure differiscono di più di 1 cm, fai una terza misura.${fig("vita", "Il metro passa a metà tra l'ultima costola e l'osso del bacino, dritto e senza stringere.")}</li>
+<li><b>Circonferenza fianchi.</b> In piedi, piedi uniti. Il metro passa dove i glutei sporgono di più (guardati di lato allo specchio), parallelo al pavimento.${fig("fianchi", "Il punto più sporgente dei glutei, con il metro parallelo al pavimento.")}</li>
 </ul>
 <p>Per i controlli successivi misurati alla stessa ora e nelle stesse condizioni. Se hai il ciclo, evita di confrontare misure prese nei giorni prima delle mestruazioni.</p>`;
 
 const GUIDA_SPORT = `
 <ul>
-<li><b>Braccio.</b> Piega il gomito ad angolo retto per trovare il punto a metà tra la punta della spalla e la punta del gomito. Poi lascia il braccio destro rilassato lungo il fianco e misura in quel punto.</li>
-<li><b>Coscia.</b> In piedi, peso su entrambe le gambe. Il metro va a metà tra la piega dell'inguine e il bordo superiore del ginocchio, sulla coscia destra.</li>
+<li><b>Braccio.</b> Piega il gomito ad angolo retto per trovare il punto a metà tra la punta della spalla e la punta del gomito. Poi lascia il braccio destro rilassato lungo il fianco e misura in quel punto.${fig("braccio", "Gomito a 90°: trova la metà tra spalla e gomito, poi distendi il braccio e misura lì.")}</li>
+<li><b>Coscia.</b> In piedi, peso su entrambe le gambe. Il metro va a metà tra la piega dell'inguine e il bordo superiore del ginocchio, sulla coscia destra.${fig("coscia", "A metà tra la piega dell'inguine e il bordo superiore del ginocchio.")}</li>
 </ul>`;
 
 const ALLERGENI = ["cereali con glutine", "crostacei", "uova", "pesce", "arachidi", "soia", "latte", "frutta a guscio", "sedano", "senape", "semi di sesamo", "anidride solforosa e solfiti", "lupini", "molluschi", "altro"];
