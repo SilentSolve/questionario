@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex, nofollow">
-<title>Questionario sulle abitudini alimentari</title>
+<title>Cosa ne pensi della proposta?</title>
 <style>:root {
   --bg: #f6f7f4; --card: #ffffff; --ink: #1d2320; --muted: #5c6661; --line: #dfe3dd;
   --accent: #2f6f4f; --accent-ink: #ffffff; --accent-soft: #e3efe8; --warn: #9a3b2a; --warn-soft: #f8e6e1;
@@ -122,7 +122,7 @@ figure.fig figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
 </head>
 <body>
 <header class="top"><div class="top-inner">
-  <div class="top-row"><span class="brand">Questionario nutrizionale</span><span class="saved" id="saved" aria-live="polite"></span></div>
+  <div class="top-row"><span class="brand">Parere sulla proposta</span><span class="saved" id="saved" aria-live="polite"></span></div>
   <div class="bar" aria-hidden="true"><span id="bar"></span></div>
   <div class="step" id="step"></div>
 </div></header>
@@ -516,6 +516,58 @@ function alimentiEsclusi(A) {
   if (diet === "vegana") { add(carne); add(ALIMENTI[2][1]); add(["uova"]); add(latticini); }
   return ex;
 }
+
+/* Parere del paziente sulla proposta di menù. Il link contiene, dopo il #, l'elenco dei pasti e degli
+   alimenti della proposta (il # non viene mai inviato al sito: resta sul telefono). */
+FORM_META = {
+  schema: "parere-nutrizionale", storeKey: "parere-nutrizionale", dueParti: false,
+  titolo: "Cosa ne pensi della proposta?", marchio: "Parere sulla proposta", prefisso: "parere",
+  intro: "Tieni aperto il documento con la proposta che hai ricevuto. Bastano 5 minuti: le tue risposte servono a preparare la versione definitiva, fatta su misura per te."
+};
+(function () {
+  let P = null;
+  try {
+    const h = location.hash.slice(1);
+    if (h) {
+      const bin = atob(h.replace(/-/g, "+").replace(/_/g, "/"));
+      P = JSON.parse(new TextDecoder().decode(Uint8Array.from(bin, c => c.charCodeAt(0))));
+    }
+  } catch (e) { P = null; }
+  if (!P || !P.k || !Array.isArray(P.pasti) || !Array.isArray(P.cibi)) {
+    FORM_META.extra = {};
+    SECTIONS = [{ key: "err", level: 1, title: "Link incompleto", noNotes: true, fields: [
+      { type: "info", html: "<p><b>Questo link non è completo.</b> Apri il link esatto che ti è stato mandato su WhatsApp o per email (è lungo: deve comprendere anche la parte dopo il simbolo #).</p>" }] }];
+    return;
+  }
+  FORM_META.storeKey = "parere-" + P.k;
+  FORM_META.extra = { codice_proposta: P.k };
+  const pasti = P.pasti.map((p, i) => ["m" + i, p + (P.ore && P.ore[i] ? " (" + P.ore[i] + ")" : "")]);
+  const cibi = P.cibi.map(([c, n]) => [c, n]);
+  const daCambiare = A => Object.values(A["p.6"] || {}).includes("da cambiare");
+  SECTIONS = [
+    { key: "p1", level: 1, title: "Il menù in generale", intro: "Rispondi pensando alla settimana che ti è stata proposta.", fields: [
+      { id: "1.4", label: "Il tuo nome e cognome", type: "text", req: true, autocomplete: "name" },
+      { id: "p.1", label: "Quanto ti piace il menù proposto? (0 = per niente, 10 = moltissimo)", type: "scale", req: true },
+      { id: "p.2", label: "Pensi di riuscire a seguirlo?", type: "radio", req: true, opts: ["sì, senza problemi", "sì, con qualche difficoltà", "no, così è troppo difficile"] },
+      { id: "p.2a", label: "Cosa ti sembra più difficile?", type: "textarea", show: A => A["p.2"] && A["p.2"] !== "sì, senza problemi" },
+      { id: "p.3", label: "Le quantità, in generale, ti sembrano…", type: "radio", req: true, opts: ["poche", "giuste", "troppe"] },
+      { id: "p.4", label: "E la varietà?", type: "radio", opts: ["va bene così", "preferirei ripetere più spesso gli stessi piatti", "vorrei ancora più varietà"] }
+    ] },
+    { key: "p2", level: 1, title: "Pasto per pasto", intro: "Per ogni pasto dimmi se la quantità ti sembra giusta e se l'orario va bene.", fields: [
+      { id: "p.5", label: "Quantità", type: "grid", req: true, cols: ["poco", "giusto", "troppo"], rows: pasti },
+      { id: "p.6", label: "Orario", type: "grid", cols: ["va bene", "da cambiare"], rows: pasti },
+      { id: "p.6a", label: "Quali orari sarebbero meglio?", type: "textarea", show: daCambiare }
+    ] },
+    { key: "p3", level: 1, title: "Gli alimenti", intro: "Sono gli alimenti presenti nella proposta. Segna solo quelli che non ti vanno: per gli altri non serve rispondere.", fields: [
+      { id: "p.7", label: "Alimenti della proposta", type: "grid", cols: ["va bene", "preferirei evitarlo", "non lo mangio"], rows: cibi },
+      { id: "p.8", label: "C'è qualcosa che vorresti trovare più spesso?", type: "textarea" }
+    ] },
+    { key: "p4", level: 1, title: "Per finire", noNotes: true, fields: [
+      { id: "p.9", label: "Cosa cambieresti della proposta?", type: "textarea" },
+      { id: "p.10", label: "Preferisci sentirci prima di ricevere la versione definitiva?", type: "yesno" }
+    ] }
+  ];
+})();
 </script>
 <script>(function () {
 "use strict";

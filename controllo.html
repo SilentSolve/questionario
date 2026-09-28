@@ -1092,6 +1092,7 @@ async function buildFile(level, password) {
     note: Object.fromEntries(Object.entries(S.notes).filter(([, v]) => v && v.trim())),
     allegati: FILES
   };
+  if (FORM_META.extra) Object.assign(payload, FORM_META.extra);
   const text = JSON.stringify(payload, null, 2);
   const date = nowISO().slice(0, 10);
   const base = FORM_META.prefisso + "_" + slug(S.A["1.4"]) + "_" + date + (FORM_META.dueParti ? "_parte" + level : "");
